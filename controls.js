@@ -1,13 +1,20 @@
 // Identify and make groups of buttons for questions
 // Adapted from www.morenostok.io/mirana data visualisation tool
-function createOptions(questions, domObjID, varsToChange){
-	var qCount = 1; // Count number of questions groups for IDs
+
+var qCount = 1; // Count number of questions groups for IDs
+function createOptions(questions, varsToChange){
+
+    // Draw Qs
+    var questionBlock = document.createElement("DIV");
+        questionBlock.id = 'questionBlock';
+    document.getElementById('questionnaire').appendChild(questionBlock);
 
 	for(const q of questions){
 			
 		// Wrap group in div
 		var div = document.createElement("DIV");
-		document.getElementById(domObjID).appendChild(div);
+            div.className = 'q p-2';
+		questionBlock.appendChild(div);
 
 		var text = document.createElement("H5");
             text.innerHTML = q.text;
@@ -24,8 +31,9 @@ function createOptions(questions, domObjID, varsToChange){
             // Create input button
             var btn = document.createElement("INPUT");
                 btn.setAttribute("type", 'radio');
-                btn.onchange = () => {varsToChange[q.axis] = i; console.log(varsToChange)};
+                btn.onchange = () => {varsToChange[q.id].score = i; console.log(q.id, varsToChange[q.id].score)};
                 btn.name = `q-${qCount}`;
+                btn.className = 'm-1';
         
             // Append to DOM
             div.appendChild(btn);

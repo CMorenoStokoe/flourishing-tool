@@ -44,20 +44,27 @@
 		</style>
 	
 	</head>
-	<body>	
+	<body>			
 		<div class="progress m-2 mb-4" style='height: 30px;' id='progressBar-div'>
 			<div id='progressBar' class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 		</div>
-
  		<div id="questionnaire">
-			<div class='questionBlock'></div>
+			 <div class='questionBlock'></div>
 		 </div>
-
-		<div class="radarChart" id='radarChart'></div>
-
  		<div id="btn-div"></div>
-
-		<div id="answers"></div>
+		<div class="radarChart" id='radarChart'></div>
+		<div class="accordion accordion-flush m-2" id="accordionFlushExample">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="flush-headingOne" style='visibility: hidden;'>
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+					View answers
+					</button>
+				</h2>
+				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+					<div class="accordion-body" id="answers"></div>
+				</div>
+			</div>
+		</div>
 
 		<script src="controls.js"></script>	
 		<script src="questionnaire.js"></script>
