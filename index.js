@@ -76,49 +76,51 @@ const createGraph = () => {
     // Call function to draw the Radar chart
     RadarChart(".radarChart", data, radarChartOptions);
 }
+const graphIt = () => {
+    createGraph(); 
+    $('#progressBar-div').hide();
+    $('#continue-btn').hide();
+    var btn = document.createElement('Button');
+        btn.innerHTML = 'Show answers';
+        btn.onclick = () => {
+            for(const q of answeredQuestions){
+                $('#answers').append(q);
+            };
+            $(btn).hide();
+        };
+        btn.className = 'btn btn-warning m-2';
+        btn.id = 'continue-btn';
+    document.getElementById('btn-div').append(btn);
+}
 const progress = () => {
     if ($('input:checked').length != $('.q').length) {
         alert('Please answer all questions so you can continue');
         return;
-    };
-    
-    // Record and remove answers
-    answeredQuestions.push($('#questionnaire #questionBlock')); // Move answered questions to answers div
-    document.getElementById('questionnaire').innerHTML = ''; // Clear answered Qs
-    
-    // Progress stage
-    stage ++;
+    } else {
+        
+        // Record and remove answers
+        answeredQuestions.push($('#questionnaire #questionBlock')); // Move answered questions to answers div
+        document.getElementById('questionnaire').innerHTML = ''; // Clear answered Qs
+        
+        // Progress stage
+        stage ++;
 
-    // Progress bar
-    $('#progressBar')
-        .css('width', `${100/6*stage}%`)
-        .attr('aria-valuenow', 100/6*stage);
+        // Progress bar
+        $('#progressBar')
+            .css('width', `${100/6*stage}%`)
+            .attr('aria-valuenow', 100/6*stage);
 
-    // Switch
-    switch(stage){
-        case 1: 
-            createOptions(Object.values(questions).slice(0,6), answers); 
-            break;
-        case 2: createOptions(Object.values(questions).slice(6,13), answers); break;
-        case 3: createOptions(Object.values(questions).slice(13,20), answers); break;
-        case 4: createOptions(Object.values(questions).slice(20,28), answers); break;
-        case 5: createOptions(Object.values(questions).slice(28,34), answers); break;
-        default:
-            createGraph(); 
-            $('#progressBar-div').hide();
-            $('#continue-btn').hide();
-            var btn = document.createElement('Button');
-                btn.innerHTML = 'Show answers';
-                btn.onclick = () => {
-                    for(const q of answeredQuestions){
-                        $('#answers').append(q);
-                    };
-                    $(btn).hide();
-                };
-                btn.className = 'btn btn-warning m-2';
-                btn.id = 'continue-btn';
-            document.getElementById('btn-div').append(btn);
-            break;
+        // Progress based on stage
+        switch(stage){
+            case 1: 
+                createOptions(Object.values(questions).slice(0,6), answers); 
+                break;
+            case 2: createOptions(Object.values(questions).slice(6,13), answers); break;
+            case 3: createOptions(Object.values(questions).slice(13,20), answers); break;
+            case 4: createOptions(Object.values(questions).slice(20,28), answers); break;
+            case 5: createOptions(Object.values(questions).slice(28,34), answers); break;
+            default: graphIt(); break;
+        };
     };
 }
 
@@ -130,3 +132,15 @@ var btn = document.createElement('Button');
     btn.className = 'btn btn-warning m-2';
     btn.id = 'continue-btn';
 document.getElementById('btn-div').append(btn);
+
+// Developer tools
+var forceBtn = document.createElement('Button');
+    forceBtn.innerHTML = '[Developer] Randomise score and preview ';
+    forceBtn.onclick = () => {
+        for(const a of Object.values(answers)){
+            a.score = Math.floor(Math.random()*5);
+        }
+        graphIt();
+    }
+    forceBtn.className = 'btn btn-dark m-2';
+document.body.append(forceBtn);
