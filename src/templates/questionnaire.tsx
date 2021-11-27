@@ -1,0 +1,73 @@
+import {question} from '../model/types';
+
+function Question(props:{
+    question: question;
+    onClick: {
+        updateAnswer: Function;
+    }
+}){
+    return(
+        <div className='d-flex flex-col'>
+            <p>{props.question.text}</p>
+            <div className='d-flex flex-row'>
+                Strongly disagree
+                <input type="radio" key={`${props.question.id}_1`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 1)}}/>
+                <input type="radio" key={`${props.question.id}_2`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 2)}}/> 
+                <input type="radio" key={`${props.question.id}_3`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 3)}}/> 
+                <input type="radio" key={`${props.question.id}_4`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 4)}}/> 
+                <input type="radio" key={`${props.question.id}_5`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 5)}}/> 
+                Strongly agree
+            </div>
+        </div>
+    )
+}
+
+export function Questionnaire(props:{
+    questions: question[]; // Five questions
+    onClick: {
+        continue: Function;
+    }
+}):JSX.Element {
+    let answersThisPage: Record<string, question> = {};
+    for(const q of props.questions){
+        answersThisPage[q.id] = q;
+    };
+
+    const validateFormAndContinue = () => {
+        for(const [key, value] of Object.entries(answersThisPage)){
+            if(value.score===0){
+                alert('Please answer all questions before continuing!');
+                return;
+            }
+        };
+        props.onClick.continue(Object.entries(answersThisPage))
+    }
+
+    const renderQuestions = (): JSX.Element => {
+        const renderedQuestions: JSX.Element[] = [];
+        for(const q of props.questions){
+            renderedQuestions.push(
+                <Question 
+                    question={q}
+                    key={q.id}
+                    onClick={{
+                        updateAnswer: (id:string, score:number) => {answersThisPage[id].score = score}
+                    }}
+                />
+            );
+        }
+        return(
+            <div>
+                {renderedQuestions}
+            </div>
+        )
+    };
+    return(
+        <div>
+            {renderQuestions()}
+            <button onClick={validateFormAndContinue}>
+                Continue
+            </button>
+        </div>
+    )
+}
