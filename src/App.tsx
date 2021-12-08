@@ -4,6 +4,7 @@ import './App.css';
 import {question, questionnaire, results} from './model/types';
 // Assets
 import {questions} from './assets/questionnaire';
+import logo from './assets/gfx/logo-fe.svg';
 // Views
 import {Splash} from './templates/splash';
 import {Questionnaire} from './templates/questionnaire';
@@ -99,7 +100,16 @@ const App: React.FC = () => {
 
   // Show view
   return (
-    <div className="App">
+    <div className="App h-full">
+      <hr className='border-2' style={{borderColor: '#C7D64F'}}/>
+      <nav className='p-2 flex flex-row justify-between items-end bg-white text-gray-500'>
+        <img src={logo} className='m-2 h-16 w-auto'/>
+        <h1 className='text-xl'>FSM Online</h1>
+        <div className='text-sm'>
+          <button className='px-2 ' onClick={()=>{setView('questionnaire')}}>Start measure</button>
+          <a className='px-2 border-l' style={{borderColor: '#C7D64F'}} href='https://flourishingeducation.co.uk/'>About</a>
+        </div>
+      </nav>
       <div className='bg-black text-white'>
         Developer console 
         <p className='text-red-400'>| Current view: {view}</p>

@@ -1,5 +1,5 @@
-import { questions } from '../assets/questionnaire';
 import {question} from '../model/types';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 function Question(props:{
     question: question;
@@ -60,7 +60,7 @@ export function Questionnaire(props:{
         }
         return(
             <div>
-                [Progress: {(props.progress*100).toFixed(0)}]
+                <ProgressBar animated now={props.progress*100} label={(props.progress*100).toFixed(0)}/>
                 {renderedQuestions}
             </div>
         )

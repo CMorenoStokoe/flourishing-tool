@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500&family=Open+Sans:wght@300;400&display=swap');
+
 *{
 	font-family: 'Open Sans', sans-serif;
 }
 h1{
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Nunito', sans-serif;
+}
+html, body, #app, #root>div {
+	height: 100%
 }

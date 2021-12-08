@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {question, questionnaire, results} from '../model/types';
-// Label assets
+// Import assets
 import {labels} from '../assets/copywriting';
-// Petal assets
 import bulb from '../assets/gfx/flourishing_bulb_petal.svg';
 import petalOutline from '../assets/gfx/flourishing_outline_petal.svg';
 import petalForPH from '../assets/gfx/flourishing_red_petal.svg';
