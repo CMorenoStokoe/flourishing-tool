@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import './App.css';
 // Types
-import {question, questionnaire} from './model/types';
+import {question, questionnaire, results} from './model/types';
 // Assets
 import {questions} from './assets/questionnaire';
 // Views
 import {Splash} from './templates/splash';
 import {Questionnaire} from './templates/questionnaire';
 import {Results} from './templates/results';
-//import logo from './logo.svg';
 
 const App: React.FC = () => {
   const [view, setView] = useState<'splash' | 'questionnaire' | 'results' >('splash');
@@ -48,6 +47,28 @@ const App: React.FC = () => {
     };
   }
 
+  // Calculate score
+  function scoreResponses(): results{
+    const totals = {
+        PhysicalHealth: 0,
+        CognitiveHealth: 0,
+        EmotionalHealth :0,
+        SocialHealth: 0,
+        SpiritualHealth: 0
+    }
+    for(const [key, value] of Object.entries(recordedAnswers)){
+        totals[value.axis] += value.score;
+    }
+    return ({
+      PhysicalHealth: totals.PhysicalHealth / 9 ,
+      CognitiveHealth: totals.CognitiveHealth / 6,
+      EmotionalHealth: totals.EmotionalHealth / 4,
+      SpiritualHealth: totals.SpiritualHealth / 9,
+      SocialHealth: totals.SocialHealth / 6
+    })
+  }
+
+  // Select view
   const content = (): JSX.Element => {
     switch(view){
       case 'splash': return(
@@ -60,18 +81,23 @@ const App: React.FC = () => {
       case 'questionnaire': return(
         <Questionnaire 
           questions={sample( remainingQuestions() )}
+          progress={1 - remainingQuestions().length / Object.entries(questions).length}
           onClick={{
             continue: (answers:question[]) => {formContinueAction(answers)}
           }}
         />
       );
       case 'results': return(
-        <Results answers={recordedAnswers}/>
+        <Results 
+          scores={scoreResponses()}
+          responses={recordedAnswers}
+        />
       );
       default: return(<div>Error: Contact support</div>);
     }
   }
 
+  // Show view
   return (
     <div className="App">
       <div className='bg-black text-white'>

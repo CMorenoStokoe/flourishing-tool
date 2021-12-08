@@ -6,3 +6,11 @@ export interface question {
     axis: 'PhysicalHealth' | 'CognitiveHealth' | 'EmotionalHealth' | 'SocialHealth' | 'SpiritualHealth';
     score: number;
 };
+
+export interface results {
+    PhysicalHealth: number,
+    CognitiveHealth: number,
+    EmotionalHealth: number,
+    SocialHealth: number,
+    SpiritualHealth: number
+}

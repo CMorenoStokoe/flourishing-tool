@@ -1,3 +1,4 @@
+import { questions } from '../assets/questionnaire';
 import {question} from '../model/types';
 
 function Question(props:{
@@ -7,15 +8,15 @@ function Question(props:{
     }
 }){
     return(
-        <div className='d-flex flex-col'>
+        <div className='p-2 m-2 d-flex flex-col'>
             <p>{props.question.text}</p>
-            <div className='d-flex flex-row'>
+            <div className='p-1 d-flex flex-row text-xs'>
                 Strongly disagree
-                <input type="radio" key={`${props.question.id}_1`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 1)}}/>
-                <input type="radio" key={`${props.question.id}_2`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 2)}}/> 
-                <input type="radio" key={`${props.question.id}_3`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 3)}}/> 
-                <input type="radio" key={`${props.question.id}_4`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 4)}}/> 
-                <input type="radio" key={`${props.question.id}_5`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 5)}}/> 
+                <input className='m-1' type="radio" key={`${props.question.id}_1`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 1)}}/>
+                <input className='m-1' type="radio" key={`${props.question.id}_2`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 2)}}/> 
+                <input className='m-1' type="radio" key={`${props.question.id}_3`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 3)}}/> 
+                <input className='m-1' type="radio" key={`${props.question.id}_4`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 4)}}/> 
+                <input className='m-1' type="radio" key={`${props.question.id}_5`} name={props.question.id} onClick={()=>{props.onClick.updateAnswer(props.question.id, 5)}}/> 
                 Strongly agree
             </div>
         </div>
@@ -24,6 +25,7 @@ function Question(props:{
 
 export function Questionnaire(props:{
     questions: question[]; // Five questions
+    progress: number; // Progress through total questionnaire
     onClick: {
         continue: Function;
     }
@@ -58,6 +60,7 @@ export function Questionnaire(props:{
         }
         return(
             <div>
+                [Progress: {(props.progress*100).toFixed(0)}]
                 {renderedQuestions}
             </div>
         )
@@ -65,8 +68,8 @@ export function Questionnaire(props:{
     return(
         <div>
             {renderQuestions()}
-            <button onClick={validateFormAndContinue}>
-                Continue
+            <button className='m-2 p-3 rounded-xl bg-gray-800 text-white' onClick={validateFormAndContinue}>
+                <h1>{props.questions.length < 5 ? 'Finish measure' : 'Continue'}</h1>
             </button>
         </div>
     )
