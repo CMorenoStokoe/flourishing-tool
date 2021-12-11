@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500&family=Open+Sans:wght@300;400&display=swap');
+
+*{
+	font-family: 'Open Sans', sans-serif;
+}
+h1{
+	font-family: 'Nunito', sans-serif;
+}
+html, body, #app, #root>div {
+	height: 100%
+}
+
+.bg-wavy {
+    background: linear-gradient(275deg, #ffc700, #ffc700, #ffc700, #ff8f00, #ff005d, #ffc700);
+    background-size: 1200% 1200%;
+
+    -webkit-animation: AnimationName 14s ease infinite;
+    -moz-animation: AnimationName 14s ease infinite;
+    animation: AnimationName 14s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
