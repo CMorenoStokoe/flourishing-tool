@@ -10,9 +10,14 @@ import {Splash} from './templates/splash';
 import {Questionnaire} from './templates/questionnaire';
 import {Results} from './templates/results';
 
+// Import encoder
+var base64 = require('base-64');
+
 const App: React.FC = () => {
   const [view, setView] = useState<'splash' | 'questionnaire' | 'results' >('splash');
   const [recordedAnswers, recordAnswers] = useState<questionnaire>(questions);
+  const [progress, setProgress] = useState<number>(0);
+  const [code, setCode] = useState<string>('');
 
   const remainingQuestions = (): question[] => {
     // Get array of unanswered questions
@@ -26,10 +31,13 @@ const App: React.FC = () => {
   }
 
   const sample = (unansweredQuestions: question[]): question[] => {
+    // Set measure in progress
+    if(progress === 0){setProgress(1)};
+    
     // Shuffle array and return upto 5 random objects
-    const shuffled = unansweredQuestions.sort(() => 0.5 - Math.random());
+    //const shuffled = unansweredQuestions.sort(() => 0.5 - Math.random());
     const n = Math.min(unansweredQuestions.length, 5);
-    return(shuffled.slice(0, n));
+    return(unansweredQuestions.slice(0, n));
   }
 
   // Manage action on form continue button (continue or finish questionnaire)
@@ -41,6 +49,9 @@ const App: React.FC = () => {
       newAnswer[a.id] = a; 
     };
     recordAnswers(newAnswer); // Save answers
+
+    // Update progress
+    setProgress( (Object.entries(questions).length - remainingQuestions().length) / Object.entries(questions).length * 100 );
 
     // Continue to results once finished
     if(remainingQuestions().length === 0){
@@ -69,6 +80,59 @@ const App: React.FC = () => {
     })
   }
 
+  // Encode scores
+  const encodeResponses = ():string => { 
+    var code = '1';
+    var copyOfAnswers:questionnaire = JSON.parse(JSON.stringify(recordedAnswers));
+    for(const [key, value] of Object.entries(copyOfAnswers)){
+      if(key !== 'undefined'){
+        code += value.score.toString();
+      } else {continue};
+    };
+    var encoded = base64.encode(Number(code));
+    console.log('encoded', code, 'as', encoded);
+    return encoded;
+  };
+  const decodeResponses = (s:string):string => { 
+    var code:string = Number(base64.decode(s)).toLocaleString('fullwide', {useGrouping:false});
+    console.log('decoded', s, 'as', code);
+    return(code);
+  };
+  const codeLikelyValid = (code:string) => {
+    if(code.length===35){
+      console.log('Validated code:', code)
+      return(true);
+    } else {
+      console.log('Invalid code:', code)
+      return(false);
+    }
+  };
+
+  const getResponsesFromCode = (decoded:string):questionnaire => {
+    var count = 1; // Skip leading 1
+    var newResponses:questionnaire = JSON.parse(JSON.stringify(recordedAnswers));
+    for(const [key, value] of Object.entries(newResponses)){
+      if(key !== 'undefined'){
+        value.score = Number(decoded[count]);
+        count += 1;
+      } else {continue};
+    };
+    return(newResponses);
+  }
+
+  const loadResponses = (code:string) => {
+    setCode(code);
+    const decoded = decodeResponses(code);
+    if(codeLikelyValid( decoded )){
+      const newResponses = getResponsesFromCode(decoded);
+      recordAnswers(newResponses);
+      setProgress(100)
+      console.log('Restored responses:', newResponses, 'to current results', recordedAnswers);
+    } else {
+      alert(`Error fetching results with code "${code}", please try again and contact support if the problem persists`)
+    }
+  }
+
   // Select view
   const content = (): JSX.Element => {
     switch(view){
@@ -81,10 +145,11 @@ const App: React.FC = () => {
       );
       case 'questionnaire': return(
         <Questionnaire 
+          progress={ progress }
           questions={sample( remainingQuestions() )}
-          progress={1 - remainingQuestions().length / Object.entries(questions).length}
           onClick={{
-            continue: (answers:question[]) => {formContinueAction(answers)}
+            continue: (answers:question[]) => {formContinueAction(answers)},
+            back: ()=>{setView('results')}
           }}
         />
       );
@@ -92,6 +157,13 @@ const App: React.FC = () => {
         <Results 
           scores={scoreResponses()}
           responses={recordedAnswers}
+          code={code}
+          progress={progress}
+          onClick={{
+            viewMeasure: ()=>{setView('questionnaire')},
+            loadResults: (newCode:string)=>{loadResponses(newCode)},
+            generateCode: () => {setCode( encodeResponses() )}
+          }}
         />
       );
       default: return(<div>Error: Contact support</div>);
@@ -101,26 +173,43 @@ const App: React.FC = () => {
   // Show view
   return (
     <div className="App h-full">
-      <hr className='border-2' style={{borderColor: '#C7D64F'}}/>
+
+      {
+        // Navbar
+      }
+      <hr id='border-theme-top' className='border-2' style={{borderColor: '#C7D64F'}}/>
       <nav className='p-2 flex flex-row justify-between items-end bg-white text-gray-500'>
-        <img src={logo} className='m-2 h-16 w-auto'/>
-        <h1 className='text-xl'>FSM Online</h1>
-        <div className='text-sm'>
-          <button className='px-2 ' onClick={()=>{setView('questionnaire')}}>Start measure</button>
-          <a className='px-2 border-l' style={{borderColor: '#C7D64F'}} href='https://flourishingeducation.co.uk/'>About</a>
+        <div id='nav-brand' className='flex flex-row justify-start items-end'>
+          <img src={logo} className='m-2 h-16 w-auto'/>
+          <h1 className='mx-2 p-1 text-3xl'>
+            FSM Online
+          </h1>
+        </div>
+        <div id='nav-links' className='text-sm'>
+          <button className='px-2 ' onClick={()=>{setView('splash')}}>Home</button>
+          <button className='px-2 border-l' style={{borderColor: '#C7D64F'}} onClick={()=>{setView('questionnaire')}}>Measure</button>
+          <button className='px-2 border-l' style={{borderColor: '#C7D64F'}} onClick={()=>{setView('results')}}>Results</button>
+          <a className='px-2 border-l' style={{borderColor: '#C7D64F'}} href='https://flourishingeducation.co.uk/' target='_blank'>About</a>
         </div>
       </nav>
-      <div className='bg-black text-white'>
-        Developer console 
-        <p className='text-red-400'>| Current view: {view}</p>
-        <p className='text-green-400'>
-          | Force view: 
-          <button className='m-2' onClick={()=>{setView('splash')}}>splash</button>
-          <button className='m-2' onClick={()=>{setView('questionnaire')}}>questionnaire</button>
-          <button className='m-2' onClick={()=>{setView('results')}}>results</button>
-        </p>
+      <div id='progress-bar' 
+        className='mb-4 p-2 bg-gray-100 flex flex-row justify-center items-center' 
+        style={{visibility: progress>0&&progress<100 ? 'visible' : 'hidden'}}
+      >
+        <h1>Measure in progress:</h1>
+        <div className="m-2 h-4 w-3/4 max-w-xl rounded-xl shadow bg-gray-200">
+            <div 
+                className="h-full rounded-xl bg-wavy transition-all duration-1000" 
+                style={{width:`${progress}%`}}
+            />
+        </div>
       </div>
-      {content()}
+
+      {
+        // Current view
+        content()
+      }
+      
     </div>
   );
 }

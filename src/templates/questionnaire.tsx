@@ -1,5 +1,4 @@
 import {question} from '../model/types';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 
 function Question(props:{
     question: question;
@@ -25,9 +24,10 @@ function Question(props:{
 
 export function Questionnaire(props:{
     questions: question[]; // Five questions
-    progress: number; // Progress through total questionnaire
+    progress: number;
     onClick: {
         continue: Function;
+        back: Function;
     }
 }):JSX.Element {
     let answersThisPage: Record<string, question> = {};
@@ -42,7 +42,7 @@ export function Questionnaire(props:{
                 return;
             }
         };
-        props.onClick.continue(Object.entries(answersThisPage))
+        props.onClick.continue(Object.entries(answersThisPage));
     }
 
     const renderQuestions = (): JSX.Element => {
@@ -59,18 +59,38 @@ export function Questionnaire(props:{
             );
         }
         return(
-            <div>
-                <ProgressBar animated now={props.progress*100} label={(props.progress*100).toFixed(0)}/>
+            <div className='flex flex-col items-center'> 
                 {renderedQuestions}
             </div>
         )
     };
-    return(
-        <div>
-            {renderQuestions()}
-            <button className='m-2 p-3 rounded-xl bg-gray-800 text-white' onClick={validateFormAndContinue}>
-                <h1>{props.questions.length < 5 ? 'Finish measure' : 'Continue'}</h1>
-            </button>
-        </div>
-    )
+
+    if(props.progress<100){
+        return(
+            <div>
+                {renderQuestions()}
+                <button className='m-2 p-3 rounded-xl bg-gray-800 text-white' onClick={validateFormAndContinue}>
+                    <h1>{props.questions.length < 5 ? 'Finish measure' : 'Continue'}</h1>
+                </button>
+            </div>
+        )
+    }else{
+        return(
+            <div className='flex flex-ow justify-center items-center'>
+                <div className='p-4 m-2 max-w-lg rounded bg-white'>
+                    <h1 className='m-2 text-2xl'>
+                        All done! 
+                    </h1>
+                    <h1 className='m-2 text-lg'>
+                        Click below to continue to see your results or refresh the web page to start again.
+                    </h1>
+                    <button className='m-2 p-3 rounded-xl bg-gray-800 text-white' 
+                        onClick={()=>{props.onClick.back()}}>
+                        <h1>View results</h1>
+                    </button>
+                </div>
+            </div>
+        )
+    }
+    
 }
