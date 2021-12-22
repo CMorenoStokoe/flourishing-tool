@@ -59,7 +59,6 @@ function Label(props:{
 function Graph(props:{
     scores: results;
 }){
-    console.log('visualising:', props.scores);
     // Base widths (w) and areas (a)
     const w = {container: 14, bulb: 6, petal: 2.5};
     const a = {bulb: Math.PI * w.bulb ^ 2, petal: Math.PI * w.petal ^ 2};
@@ -110,7 +109,7 @@ function Graph(props:{
             {
                 // Petal graph
             }
-            <div id='graph' className={`mx-8 w-56 h-${w.container*4} relative`}>
+            <div id='graph' className={`mx-8 w-56 relative`} style={{height:'14rem'}}>
                 {
                     // Central bulb
                 }

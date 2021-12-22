@@ -166,7 +166,7 @@ const App: React.FC = () => {
         <div id='nav-brand' className='flex flex-row justify-start items-end'>
           <img src={logo} className='m-2 h-16 w-auto'/>
           <h1 className='mx-2 p-1 text-3xl'>
-            FSM Online
+            Flourishing Online
           </h1>
         </div>
         <div id='nav-links' className='text-sm'>

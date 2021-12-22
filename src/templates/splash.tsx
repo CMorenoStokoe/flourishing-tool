@@ -15,7 +15,7 @@ export function Splash(props:{
         }}>
             <div className='m-2 p-8 rounded bg-white shadow-xl'>
                 <h1 className='p-2 text-3xl text-gray-500'>
-                    FSM Online
+                    Flourishing Online
                 </h1>
                 <h1 className='p-2 text-3xl'>
                     Assessment tool for wellbeing
