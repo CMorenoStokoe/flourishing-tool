@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/flourishing/build/static/css/main.f6662b46.chunk.css",
-    "main.js": "/flourishing/build/static/js/main.93390dd6.chunk.js",
-    "main.js.map": "/flourishing/build/static/js/main.93390dd6.chunk.js.map",
-    "runtime-main.js": "/flourishing/build/static/js/runtime-main.65b697d9.js",
-    "runtime-main.js.map": "/flourishing/build/static/js/runtime-main.65b697d9.js.map",
-    "static/js/2.73afbdd4.chunk.js": "/flourishing/build/static/js/2.73afbdd4.chunk.js",
-    "static/js/2.73afbdd4.chunk.js.map": "/flourishing/build/static/js/2.73afbdd4.chunk.js.map",
-    "static/js/3.ba020aab.chunk.js": "/flourishing/build/static/js/3.ba020aab.chunk.js",
-    "static/js/3.ba020aab.chunk.js.map": "/flourishing/build/static/js/3.ba020aab.chunk.js.map",
+    "main.css": "/flourishing/build/static/css/main.174e1aaf.chunk.css",
+    "main.js": "/flourishing/build/static/js/main.d2acc2d0.chunk.js",
+    "main.js.map": "/flourishing/build/static/js/main.d2acc2d0.chunk.js.map",
+    "runtime-main.js": "/flourishing/build/static/js/runtime-main.aa5e49de.js",
+    "runtime-main.js.map": "/flourishing/build/static/js/runtime-main.aa5e49de.js.map",
+    "static/js/2.836f1541.chunk.js": "/flourishing/build/static/js/2.836f1541.chunk.js",
+    "static/js/2.836f1541.chunk.js.map": "/flourishing/build/static/js/2.836f1541.chunk.js.map",
+    "static/js/3.0bea497e.chunk.js": "/flourishing/build/static/js/3.0bea497e.chunk.js",
+    "static/js/3.0bea497e.chunk.js.map": "/flourishing/build/static/js/3.0bea497e.chunk.js.map",
     "index.html": "/flourishing/build/index.html",
-    "static/css/main.f6662b46.chunk.css.map": "/flourishing/build/static/css/main.f6662b46.chunk.css.map",
-    "static/js/2.73afbdd4.chunk.js.LICENSE.txt": "/flourishing/build/static/js/2.73afbdd4.chunk.js.LICENSE.txt",
+    "static/css/main.174e1aaf.chunk.css.map": "/flourishing/build/static/css/main.174e1aaf.chunk.css.map",
+    "static/js/2.836f1541.chunk.js.LICENSE.txt": "/flourishing/build/static/js/2.836f1541.chunk.js.LICENSE.txt",
     "static/media/bg.0154e95c.svg": "/flourishing/build/static/media/bg.0154e95c.svg",
     "static/media/flourishing_bulb_petal.66e30c15.svg": "/flourishing/build/static/media/flourishing_bulb_petal.66e30c15.svg",
     "static/media/flourishing_cyan_petal.0dea1b24.svg": "/flourishing/build/static/media/flourishing_cyan_petal.0dea1b24.svg",
@@ -24,9 +24,9 @@
     "static/media/logo-petal.8a41023e.svg": "/flourishing/build/static/media/logo-petal.8a41023e.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.65b697d9.js",
-    "static/js/2.73afbdd4.chunk.js",
-    "static/css/main.f6662b46.chunk.css",
-    "static/js/main.93390dd6.chunk.js"
+    "static/js/runtime-main.aa5e49de.js",
+    "static/js/2.836f1541.chunk.js",
+    "static/css/main.174e1aaf.chunk.css",
+    "static/js/main.d2acc2d0.chunk.js"
   ]
 }

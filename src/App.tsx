@@ -10,9 +10,6 @@ import {Splash} from './templates/splash';
 import {Questionnaire} from './templates/questionnaire';
 import {Results} from './templates/results';
 
-// Import encoder
-var base64 = require('base-64');
-
 const App: React.FC = () => {
   const [view, setView] = useState<'splash' | 'questionnaire' | 'results' >('splash');
   const [recordedAnswers, recordAnswers] = useState<questionnaire>(questions);
@@ -35,9 +32,9 @@ const App: React.FC = () => {
     if(progress === 0){setProgress(1)};
     
     // Shuffle array and return upto 5 random objects
-    //const shuffled = unansweredQuestions.sort(() => 0.5 - Math.random());
+    const shuffled = unansweredQuestions.sort(() => 0.5 - Math.random());
     const n = Math.min(unansweredQuestions.length, 5);
-    return(unansweredQuestions.slice(0, n));
+    return(shuffled.slice(0, n));
   }
 
   // Manage action on form continue button (continue or finish questionnaire)
@@ -82,54 +79,41 @@ const App: React.FC = () => {
 
   // Encode scores
   const encodeResponses = ():string => { 
-    var code = '1';
+    var codeString = 'W';
     var copyOfAnswers:questionnaire = JSON.parse(JSON.stringify(recordedAnswers));
     for(const [key, value] of Object.entries(copyOfAnswers)){
       if(key !== 'undefined'){
-        code += value.score.toString();
+        codeString += value.score.toString();
       } else {continue};
     };
-    var encoded = base64.encode(Number(code));
-    console.log('encoded', code, 'as', encoded);
-    return encoded;
+    return codeString;
   };
-  const decodeResponses = (s:string):string => { 
-    var code:string = Number(base64.decode(s)).toLocaleString('fullwide', {useGrouping:false});
-    console.log('decoded', s, 'as', code);
-    return(code);
-  };
-  const codeLikelyValid = (code:string) => {
-    if(code.length===35){
-      console.log('Validated code:', code)
-      return(true);
-    } else {
-      console.log('Invalid code:', code)
+  const codeLikelyValid = (codeString:string) => {
+    if(codeString.length!==35){
+      alert(`Your code "${codeString}" was not 35 digits long. Valid codes are 35 digits long and are a series of numbers (0-5) starting with the character "W". Please try again and contact support if the problem persists`)
       return(false);
     }
-  };
-
-  const getResponsesFromCode = (decoded:string):questionnaire => {
-    var count = 1; // Skip leading 1
-    var newResponses:questionnaire = JSON.parse(JSON.stringify(recordedAnswers));
-    for(const [key, value] of Object.entries(newResponses)){
-      if(key !== 'undefined'){
-        value.score = Number(decoded[count]);
-        count += 1;
-      } else {continue};
-    };
-    return(newResponses);
+    if(codeString[0]!=='W'){
+      alert(`Your code "${codeString}" did not start with "W". Valid codes are 35 digits long and are a series of numbers (0-5) starting with the character "W". Please try again and contact support if the problem persists`)
+      return(false);
+    }
+    return(true)
+  }
+  const getResponsesFromCode = (codeString:string):questionnaire => {
+    var copyOfAnswers:questionnaire = JSON.parse(JSON.stringify(recordedAnswers));
+    for(let i = 1; i < codeString.length; i++){  // Skip leading character W
+      copyOfAnswers[`q${i}`].score = Number(codeString[i]);
+    }
+    return(copyOfAnswers);
   }
 
-  const loadResponses = (code:string) => {
-    setCode(code);
-    const decoded = decodeResponses(code);
-    if(codeLikelyValid( decoded )){
-      const newResponses = getResponsesFromCode(decoded);
+  const loadResponses = (codeString:string) => {
+    setCode(codeString);
+    if(codeLikelyValid(codeString)){
+      const newResponses = getResponsesFromCode(codeString);
       recordAnswers(newResponses);
-      setProgress(100)
-      console.log('Restored responses:', newResponses, 'to current results', recordedAnswers);
-    } else {
-      alert(`Error fetching results with code "${code}", please try again and contact support if the problem persists`)
+      setProgress(100);
+      console.log('Restored responses from code:', codeString, 'to current results', recordedAnswers);
     }
   }
 
@@ -194,7 +178,7 @@ const App: React.FC = () => {
       </nav>
       <div id='progress-bar' 
         className='mb-4 p-2 bg-gray-100 flex flex-row justify-center items-center' 
-        style={{visibility: progress>0&&progress<100 ? 'visible' : 'hidden'}}
+        style={{display: progress>0&&progress<100 ? 'flex' : 'none'}}
       >
         <h1>Measure in progress:</h1>
         <div className="m-2 h-4 w-3/4 max-w-xl rounded-xl shadow bg-gray-200">

@@ -40,9 +40,7 @@ function Label(props:{
     score: number;
 }):JSX.Element{
     return(
-        <div 
-            className='w-52 max-w-52 text-xs'
-            style={{padding: `${props.pos.y}rem ${props.pos.x}rem`}}>
+        <div className={`p-2 xl:py-${props.pos.y*4} xl:px-${props.pos.y*4} w-52 max-w-52 text-xs`}>
             <h1 className='font-medium' style={{display: 'inline'}}>
                 {props.label.title}
             </h1>
@@ -100,7 +98,7 @@ function Graph(props:{
         })
     }
     return(
-        <div className='flex flex-row justify-start items-start'>
+        <div className='flex flex-col xl:flex-row justify-center items-center'>
             {
                 // Labels (left)
             }
@@ -138,8 +136,8 @@ function Graph(props:{
                 // Labels (right)
             }
             <div id='labels-right'>
-                <Label label={labels.EmotionalHealth} pos={{x:0,y:3}} score={props.scores.EmotionalHealth}/>
-                <Label label={labels.CognitiveHealth} pos={{x:0,y:2}} score={props.scores.CognitiveHealth}/>
+                <Label label={labels.EmotionalHealth} pos={{x:0,y:2}} score={props.scores.EmotionalHealth}/>
+                <Label label={labels.CognitiveHealth} pos={{x:0,y:1}} score={props.scores.CognitiveHealth}/>
             </div>
         </div>
     )
@@ -182,7 +180,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
     return(
         <div key={'t_responses'} className='m-2 p-2 text-left'>
 
-            <h1 id='PhysicalQs' className='p-2 text-lg text-white font-md rounded' style={{background: labels.PhysicalHealth.color}}>
+            <h1 id='PhysicalQs' className='p-2 text-lg text-white rounded' style={{background: labels.PhysicalHealth.color}}>
                 Physical Health
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.PhysicalHealth.toFixed(1)}
@@ -190,7 +188,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             </h1>
             <table className='m-2 p-4 w-full'><tbody>{responses.PhysicalHealth}</tbody></table>
             
-            <h1 id='CognitiveQs' className='p-2 text-lg text-white font-md rounded' style={{background: labels.CognitiveHealth.color}}>
+            <h1 id='CognitiveQs' className='p-2 text-lg text-white rounded' style={{background: labels.CognitiveHealth.color}}>
                 Cognitive Health
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.CognitiveHealth.toFixed(1)}
@@ -198,7 +196,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             </h1>
             <table className='m-2 p-4 w-full'><tbody>{responses.CognitiveHealth}</tbody></table>
 
-            <h1 id='EmotionalQs' className='p-2 text-lg text-white font-md rounded' style={{background: labels.EmotionalHealth.color}}>
+            <h1 id='EmotionalQs' className='p-2 text-lg text-white rounded' style={{background: labels.EmotionalHealth.color}}>
                 Emotional Health
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.EmotionalHealth.toFixed(1)}
@@ -206,7 +204,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             </h1>
             <table className='m-2 p-4 w-full'><tbody>{responses.EmotionalHealth}</tbody></table>
             
-            <h1 id='SocialQs' className='p-2 text-lg text-white font-md rounded' style={{background: labels.SocialHealth.color}}>
+            <h1 id='SocialQs' className='p-2 text-lg text-white rounded' style={{background: labels.SocialHealth.color}}>
                 Social Health
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.SocialHealth.toFixed(1)}
@@ -214,7 +212,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             </h1>
             <table className='m-2 p-4 w-full'><tbody>{responses.SocialHealth}</tbody></table>
 
-            <h1 id='SpiritualQs' className='p-2 text-lg text-white font-md rounded' style={{background: labels.SpiritualHealth.color}}>
+            <h1 id='SpiritualQs' className='p-2 text-lg text-white rounded' style={{background: labels.SpiritualHealth.color}}>
                 Spiritual Health
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.SpiritualHealth.toFixed(1)}
@@ -268,24 +266,23 @@ export function Results(props:{
         )
     } else { // If measure finished
         return(
-            <div className='w-full flex flex-col justify-center items-center'>
-
-                {
-                    // Graph
-                }    
-                <h1 className='p-4 text-3xl'>Your results</h1>
-                {graph ? <Graph scores={props.scores} /> : ''}
-                
+            <div className='w-full flex flex-col justify-center items-center'>                
                 {
                     // Save code
                 }
-                <div className='m-2 bg-white text-sm rounded-xl flex flex-row justify-center align-center'>
+                <div className='m-2 bg-white text-sm rounded-xl self-end flex flex-row justify-center align-center'>
                     <button  className='p-2 rounded-xl bg-yellow-500 text-white' 
                         onClick={()=>{props.onClick.generateCode()}}>
                         Save code
                     </button>
                     <p className='p-2'>{props.code}</p>
                 </div>
+
+                {
+                    // Graph
+                }    
+                <h1 className='p-4 text-3xl'>Your results</h1>
+                {graph ? <Graph scores={props.scores} /> : ''}
 
                 {
                     // Answers
