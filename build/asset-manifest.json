@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "./static/css/main.174e1aaf.chunk.css",
-    "main.js": "./static/js/main.aa251b44.chunk.js",
-    "main.js.map": "./static/js/main.aa251b44.chunk.js.map",
+    "main.css": "./static/css/main.b68c2535.chunk.css",
+    "main.js": "./static/js/main.bcb59e33.chunk.js",
+    "main.js.map": "./static/js/main.bcb59e33.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.26a4e527.js",
     "runtime-main.js.map": "./static/js/runtime-main.26a4e527.js.map",
     "static/js/2.2bca2bb7.chunk.js": "./static/js/2.2bca2bb7.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.5b51f813.chunk.js": "./static/js/3.5b51f813.chunk.js",
     "static/js/3.5b51f813.chunk.js.map": "./static/js/3.5b51f813.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.174e1aaf.chunk.css.map": "./static/css/main.174e1aaf.chunk.css.map",
+    "static/css/main.b68c2535.chunk.css.map": "./static/css/main.b68c2535.chunk.css.map",
     "static/js/2.2bca2bb7.chunk.js.LICENSE.txt": "./static/js/2.2bca2bb7.chunk.js.LICENSE.txt",
     "static/media/bg.0154e95c.svg": "./static/media/bg.0154e95c.svg",
     "static/media/flourishing_bulb_petal.66e30c15.svg": "./static/media/flourishing_bulb_petal.66e30c15.svg",
@@ -21,12 +21,20 @@
     "static/media/flourishing_red_petal.6cc564b5.svg": "./static/media/flourishing_red_petal.6cc564b5.svg",
     "static/media/flourishing_yellow_petal.3e9fb60d.svg": "./static/media/flourishing_yellow_petal.3e9fb60d.svg",
     "static/media/logo-fe.680c79f8.svg": "./static/media/logo-fe.680c79f8.svg",
-    "static/media/logo-petal.8a41023e.svg": "./static/media/logo-petal.8a41023e.svg"
+    "static/media/logo-petal.8a41023e.svg": "./static/media/logo-petal.8a41023e.svg",
+    "static/media/petal-flower.2bc17ffe.gif": "./static/media/petal-flower.2bc17ffe.gif",
+    "static/media/petal-snapshot.c2e4e564.gif": "./static/media/petal-snapshot.c2e4e564.gif",
+    "static/media/petal_axes.e1cc53fa.svg": "./static/media/petal_axes.e1cc53fa.svg",
+    "static/media/petal_s1.c852f521.svg": "./static/media/petal_s1.c852f521.svg",
+    "static/media/petal_s2.402c6238.svg": "./static/media/petal_s2.402c6238.svg",
+    "static/media/petal_s3.5de2361e.svg": "./static/media/petal_s3.5de2361e.svg",
+    "static/media/petal_s4.df10534b.svg": "./static/media/petal_s4.df10534b.svg",
+    "static/media/petal_s5.0cccec0e.svg": "./static/media/petal_s5.0cccec0e.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.26a4e527.js",
     "static/js/2.2bca2bb7.chunk.js",
-    "static/css/main.174e1aaf.chunk.css",
-    "static/js/main.aa251b44.chunk.js"
+    "static/css/main.b68c2535.chunk.css",
+    "static/js/main.bcb59e33.chunk.js"
   ]
 }
