@@ -11,6 +11,11 @@ import petalForSoH from '../assets/gfx/flourishing_yellow_petal.svg';
 import petalForEH from '../assets/gfx/flourishing_orange_petal.svg';
 import petalForCH from '../assets/gfx/flourishing_cyan_petal.svg';
 import petalForSpH from '../assets/gfx/flourishing_navy_petal.svg';
+import s1 from '../assets/gfx/petal_s1.svg';
+import s2 from '../assets/gfx/petal_s2.svg';
+import s3 from '../assets/gfx/petal_s3.svg';
+import s4 from '../assets/gfx/petal_s4.svg';
+import s5 from '../assets/gfx/petal_s5.svg';
 
 function ToggleAnswersButton(props:{
     onClick: Function;
@@ -44,7 +49,7 @@ function Label(props:{
             <h1 className='font-medium' style={{display: 'inline'}}>
                 {props.label.title}
             </h1>
-            <p className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
+            <p className='p-1 m-1 rounded-full' style={{color:'white', background: props.label.color, display:'inline'}}>
                 {props.score.toFixed(1)}
             </p>
             <hr style={{borderColor: props.label.color}}/>
@@ -96,6 +101,20 @@ function Graph(props:{
             transform: `translate(-50%, -50%) rotate(${angle-270}deg)`
         })
     }
+    const write = (score:number, angle:number):{top: string, left: string, transform: string, color: string, background: string} => {
+        const petal = scalePetal(score);
+        const offset:{x:number, y:number} = {x: 0, y: 0};
+        var coords = pointOnCirc({c:w.container/2,  r: (w.bulb/2) + (petal.r*.5), rad:angle*Math.PI/180});
+            coords.x += offset.x;
+            coords.y += offset.y;
+        return({ // Position on canvas
+            left: `${coords.x}rem`,
+            top: `${coords.y}rem`,
+            transform: `translate(-50%, -50%)`,
+            color: 'white',
+            background: 'none'
+        })
+    }
     return(
         <div className='flex flex-col xl:flex-row justify-center items-center'>
             {
@@ -126,10 +145,15 @@ function Graph(props:{
                     // Petals showing score
                 }
                 <img src={petalForPH} className='absolute h-auto' style={place(props.scores.PhysicalHealth, 270)}/>
+                <h1 className='p-1 absolute rounded-full' style={write(props.scores.PhysicalHealth, 270)}>{props.scores.PhysicalHealth.toFixed(1)}</h1>
                 <img src={petalForEH} className='absolute h-auto' style={place(props.scores.EmotionalHealth, 342)}/>
+                <h1 className='p-1 absolute rounded-full' style={write(props.scores.EmotionalHealth, 342)}>{props.scores.EmotionalHealth.toFixed(1)}</h1>
                 <img src={petalForCH} className='absolute h-auto' style={place(props.scores.CognitiveHealth, 54)}/>
+                <h1 className='p-1 absolute rounded-full' style={write(props.scores.CognitiveHealth, 54)}>{props.scores.CognitiveHealth.toFixed(1)}</h1>
                 <img src={petalForSpH} className='absolute h-auto' style={place(props.scores.SpiritualHealth, 126)}/>
+                <h1 className='p-1 absolute rounded-full' style={write(props.scores.SpiritualHealth, 126)}>{props.scores.SpiritualHealth.toFixed(1)}</h1>
                 <img src={petalForSoH} className='absolute h-auto' style={place(props.scores.SocialHealth, 198)}/>
+                <h1 className='p-1 absolute rounded-full' style={write(props.scores.SocialHealth, 198)}>{props.scores.SocialHealth.toFixed(1)}</h1>
             </div>
             {
                 // Labels (right)
@@ -144,7 +168,7 @@ function Graph(props:{
 
 // Compile list of answers
 function Answers(props:{responses: questionnaire; scores: results;}){
-    var responses: Record<string, JSX.Element[]> = {
+    var answers: Record<string, JSX.Element[]> = {
         PhysicalHealth: [],
         EmotionalHealth: [],
         CognitiveHealth: [],
@@ -152,24 +176,24 @@ function Answers(props:{responses: questionnaire; scores: results;}){
         SocialHealth: []
     };
     var count = 1;
-    const colors = ['gray-600','red-500','red-300','yellow-400','green-300','green-500'];
+    const scoreIcons = ['',s1,s2,s3,s4,s5];
     for(const [key, value] of Object.entries(props.responses)){
+        console.log(value.score);
         if(count > Object.entries(questions).length){
             continue
         } else {
-            const color = (c:question['axis']) => {
-                switch(c){
-                    case 'PhysicalHealth': return ''
-                }
-            }
-            responses[value.axis].push(
+            answers[value.axis].push(
                 <tr key={key} className='m-2 p-2'>
                     <td key={`${key}_id`} className='p-2 w-4'>{count}.</td>
-                    <td key={`${key}_text`} className='p-2 text-gray-800' style={{whiteSpace: 'normal'}}>{value.text}</td>
-                    <td key={`${key}_score`} className='p-2 w-4'>
-                        <p className={`text-${colors[Math.floor(value.score)]}`}>
-                            {value.score>0 ? value.score : 'N/A'}
-                        </p>
+                    <td key={`${key}_score`} 
+                        className={`p-2 w-8 rounded-l-full  ${value.score<3 ? 'bg-gray-100' : ''}`}>
+                        <img src={scoreIcons[value.score]} className='w-8 h-8'/>
+                    </td>
+                    <td key={`${key}_text`} 
+                        className={`p-2 text-gray-800 rounded-r-full ${value.score<3 ? 'bg-gray-100' : ''}`}
+                        style={{whiteSpace: 'normal'}}
+                    >
+                            {value.text}
                     </td>
                 </tr>
             );
@@ -185,7 +209,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
                     {props.scores.PhysicalHealth.toFixed(1)}
                 </span>
             </h1>
-            <table className='m-2 p-4 w-full'><tbody>{responses.PhysicalHealth}</tbody></table>
+            <table className='m-2 p-4 w-full'><tbody>{answers.PhysicalHealth}</tbody></table>
             
             <h1 id='CognitiveQs' className='p-2 text-lg text-white rounded' style={{background: labels.CognitiveHealth.color}}>
                 Cognitive Health
@@ -193,7 +217,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
                     {props.scores.CognitiveHealth.toFixed(1)}
                 </span>    
             </h1>
-            <table className='m-2 p-4 w-full'><tbody>{responses.CognitiveHealth}</tbody></table>
+            <table className='m-2 p-4 w-full'><tbody>{answers.CognitiveHealth}</tbody></table>
 
             <h1 id='EmotionalQs' className='p-2 text-lg text-white rounded' style={{background: labels.EmotionalHealth.color}}>
                 Emotional Health
@@ -201,7 +225,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
                     {props.scores.EmotionalHealth.toFixed(1)}
                 </span>
             </h1>
-            <table className='m-2 p-4 w-full'><tbody>{responses.EmotionalHealth}</tbody></table>
+            <table className='m-2 p-4 w-full'><tbody>{answers.EmotionalHealth}</tbody></table>
             
             <h1 id='SocialQs' className='p-2 text-lg text-white rounded' style={{background: labels.SocialHealth.color}}>
                 Social Health
@@ -209,7 +233,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
                     {props.scores.SocialHealth.toFixed(1)}
                 </span>
             </h1>
-            <table className='m-2 p-4 w-full'><tbody>{responses.SocialHealth}</tbody></table>
+            <table className='m-2 p-4 w-full'><tbody>{answers.SocialHealth}</tbody></table>
 
             <h1 id='SpiritualQs' className='p-2 text-lg text-white rounded' style={{background: labels.SpiritualHealth.color}}>
                 Spiritual Health
@@ -217,7 +241,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
                     {props.scores.SpiritualHealth.toFixed(1)}
                 </span>
             </h1>
-            <table className='m-2 p-4 w-full'><tbody>{responses.SpiritualHealth}</tbody></table>
+            <table className='m-2 p-4 w-full'><tbody>{answers.SpiritualHealth}</tbody></table>
             
         </div>
     )

@@ -15,6 +15,7 @@ const App: React.FC = () => {
   const [recordedAnswers, recordAnswers] = useState<questionnaire>(questions);
   const [progress, setProgress] = useState<number>(0);
   const [code, setCode] = useState<string>('');
+  const [showInstructions, setShowInstructions] = useState<boolean>(true);
 
   const remainingQuestions = (): question[] => {
     // Get array of unanswered questions
@@ -58,28 +59,30 @@ const App: React.FC = () => {
 
   // Calculate score
   function scoreResponses(): results{
-    const totals = {
-        PhysicalHealth: 0,
-        CognitiveHealth: 0,
-        EmotionalHealth :0,
-        SocialHealth: 0,
-        SpiritualHealth: 0
+    const calcAve = (thisAxis:question["axis"]) => {
+      let n=0;
+      let score=0;
+      for(const [key, value] of Object.entries(recordedAnswers)){
+        if(value.axis === thisAxis){
+          n+=1;
+          score+=value.score;
+        }
+      }
+      return score/n;
     }
-    for(const [key, value] of Object.entries(recordedAnswers)){
-        totals[value.axis] += value.score;
-    }
-    return ({
-      PhysicalHealth: totals.PhysicalHealth / 9 ,
-      CognitiveHealth: totals.CognitiveHealth / 6,
-      EmotionalHealth: totals.EmotionalHealth / 4,
-      SpiritualHealth: totals.SpiritualHealth / 9,
-      SocialHealth: totals.SocialHealth / 6
-    })
+    return({
+      PhysicalHealth: calcAve('PhysicalHealth'),
+      CognitiveHealth: calcAve('CognitiveHealth'),
+      EmotionalHealth: calcAve('EmotionalHealth'),
+      SocialHealth: calcAve('SocialHealth'),
+      SpiritualHealth: calcAve('SpiritualHealth')
+   });
   }
 
   // Encode scores
+  const leadingLetter = 'W';
   const encodeResponses = ():string => { 
-    var codeString = 'W';
+    var codeString = leadingLetter;
     var copyOfAnswers:questionnaire = JSON.parse(JSON.stringify(recordedAnswers));
     for(const [key, value] of Object.entries(copyOfAnswers)){
       if(key !== 'undefined'){
@@ -89,12 +92,13 @@ const App: React.FC = () => {
     return codeString;
   };
   const codeLikelyValid = (codeString:string) => {
-    if(codeString.length!==35){
-      alert(`Your code "${codeString}" was not 35 digits long. Valid codes are 35 digits long and are a series of numbers (0-5) starting with the character "W". Please try again and contact support if the problem persists`)
+    const lengthOfQuestionnaire = Object.entries(questions).length;
+    if(codeString.length!==(lengthOfQuestionnaire+1)){
+      alert(`Your code "${codeString}" was not ${lengthOfQuestionnaire} digits long. Valid codes are ${lengthOfQuestionnaire} digits long and are a series of numbers (0-5) starting with the character ${leadingLetter}. Please try again and contact support if the problem persists`)
       return(false);
     }
-    if(codeString[0]!=='W'){
-      alert(`Your code "${codeString}" did not start with "W". Valid codes are 35 digits long and are a series of numbers (0-5) starting with the character "W". Please try again and contact support if the problem persists`)
+    if(codeString[0]!==leadingLetter){
+      alert(`Your code "${codeString}" did not start with ${leadingLetter}. Valid codes are 35 digits long and are a series of numbers (0-5) starting with the character ${leadingLetter}. Please try again and contact support if the problem persists`)
       return(false);
     }
     return(true)
@@ -129,9 +133,11 @@ const App: React.FC = () => {
       );
       case 'questionnaire': return(
         <Questionnaire 
-          progress={ progress }
+          progress={progress}
+          showInstructions={showInstructions}
           questions={sample( remainingQuestions() )}
           onClick={{
+            dismissInstructions: ()=>{setShowInstructions(false)},
             continue: (answers:question[]) => {formContinueAction(answers)},
             back: ()=>{setView('results')}
           }}

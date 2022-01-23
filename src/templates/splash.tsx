@@ -21,14 +21,14 @@ export function Splash(props:{
                     Assessment tool for wellbeing
                 </h1>
                 <p className='p-2 text-lg'>
-                    Empower students and achieve salutogenic wellbeing
+                    Empower students to flourish and be well
                 </p>
                 <a className='m-2 p-3 rounded-xl bg-gray-600 text-white' href='https://flourishingeducation.co.uk' target='_blank' rel='noreferrer'>
                     Learn more
                 </a>          
                 <button className='m-4 p-3 rounded-xl bg-green-600 text-white' onClick={()=>{props.onClick.start()}}>
                     <img src={petalLogo} className='mr-2 w-8 h-auto' style={{display: 'inline'}}/>
-                    Start measure
+                    Begin here
                 </button>
             </div>
         </div>
