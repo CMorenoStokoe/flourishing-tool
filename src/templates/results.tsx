@@ -14,8 +14,8 @@ import petalForSpH from '../assets/gfx/flourishing_navy_petal.svg';
 import s1 from '../assets/gfx/petal_s1.svg';
 import s2 from '../assets/gfx/petal_s2.svg';
 import s3 from '../assets/gfx/petal_s3.svg';
-import s4 from '../assets/gfx/petal_s4.svg';
-import s5 from '../assets/gfx/petal_s5.svg';
+import s4 from '../assets/gfx/petal_s5.svg';
+import s5 from '../assets/gfx/petal_s4.svg';
 
 function ToggleAnswersButton(props:{
     onClick: Function;
