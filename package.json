@@ -1,7 +1,7 @@
 {
-  "homepage": "https://www.morenostok.io/flourishing/build",
-  "name": "my-app",
-  "version": "0.1.0",
+  "homepage": ".",
+  "name": "Flourishing education tool",
+  "version": "1.1",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.2",
