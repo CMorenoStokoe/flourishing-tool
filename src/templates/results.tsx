@@ -45,13 +45,16 @@ function Label(props:{
     score: number;
 }):JSX.Element{
     return(
-        <div className={`p-2 xl:py-${props.pos.y*4} xl:px-${props.pos.y*4} w-52 max-w-52 text-xs`}>
+        <div className={`p-2 xl:py-${props.pos.y*4} xl:pr-${props.pos.x*4} w-52 max-w-52 text-xs relative flex flex-col justify-center items-center`}>
+            <div className='flex flex-col items-center'>
+                <p className='p-1 rounded-full relative border border-white shadow' style={{color:'white', background: props.label.color, top:'1rem', left:'1rem'}}>
+                    {props.score.toFixed(1)}
+                </p>
+                <img src={props.label.icon} className='h-8 w-auto'/>
+            </div>
             <h1 className='font-medium' style={{display: 'inline'}}>
                 {props.label.title}
             </h1>
-            <p className='p-1 m-1 rounded-full' style={{color:'white', background: props.label.color, display:'inline'}}>
-                {props.score.toFixed(1)}
-            </p>
             <hr style={{borderColor: props.label.color}}/>
             <p className='font-light'>
                 {props.label.subtitle}
@@ -101,7 +104,7 @@ function Graph(props:{
             transform: `translate(-50%, -50%) rotate(${angle-270}deg)`
         })
     }
-    const write = (score:number, angle:number):{top: string, left: string, transform: string, color: string, background: string} => {
+    const write = (score:number, angle:number):{top: string, left: string, transform: string, color: string, background: string, textShadow: string} => {
         const petal = scalePetal(score);
         const offset:{x:number, y:number} = {x: 0, y: 0};
         var coords = pointOnCirc({c:w.container/2,  r: (w.bulb/2) + (petal.r*.5), rad:angle*Math.PI/180});
@@ -112,48 +115,56 @@ function Graph(props:{
             top: `${coords.y}rem`,
             transform: `translate(-50%, -50%)`,
             color: 'white',
-            background: 'none'
+            background: 'none',
+            textShadow: '0px 0px 3px black'
         })
     }
+    const graph = ():JSX.Element => { return (
+        <div id='graph' className={`mx-8 w-56 relative`} style={{height:'14rem'}}>
+            {
+                // Central bulb
+            }
+            <img src={bulb} className='absolute h-auto z-10' style={{width: `${w.bulb}rem`, top:`${centerBulb()}rem`, left:`${centerBulb()}rem`}}/>
+            {
+                // Petal outlines
+            }
+            <img src={petalOutline} className='absolute h-auto' style={place(5, 270)}/>
+            <img src={petalOutline} className='absolute h-auto' style={place(5, 342)}/>
+            <img src={petalOutline} className='absolute h-auto' style={place(5, 54)}/>
+            <img src={petalOutline} className='absolute h-auto' style={place(5, 126)}/>
+            <img src={petalOutline} className='absolute h-auto' style={place(5, 198)}/>
+            {
+                // Petals showing score
+            }
+            <img src={petalForPH} className='absolute h-auto' style={place(props.scores.PhysicalHealth, 270)}/>
+            <h1 className='p-1 absolute rounded-full' style={write(props.scores.PhysicalHealth, 270)}>{props.scores.PhysicalHealth.toFixed(1)}</h1>
+            <img src={petalForEH} className='absolute h-auto' style={place(props.scores.EmotionalHealth, 342)}/>
+            <h1 className='p-1 absolute rounded-full' style={write(props.scores.EmotionalHealth, 342)}>{props.scores.EmotionalHealth.toFixed(1)}</h1>
+            <img src={petalForCH} className='absolute h-auto' style={place(props.scores.CognitiveHealth, 54)}/>
+            <h1 className='p-1 absolute rounded-full' style={write(props.scores.CognitiveHealth, 54)}>{props.scores.CognitiveHealth.toFixed(1)}</h1>
+            <img src={petalForSpH} className='absolute h-auto' style={place(props.scores.SpiritualHealth, 126)}/>
+            <h1 className='p-1 absolute rounded-full' style={write(props.scores.SpiritualHealth, 126)}>{props.scores.SpiritualHealth.toFixed(1)}</h1>
+            <img src={petalForSoH} className='absolute h-auto' style={place(props.scores.SocialHealth, 198)}/>
+            <h1 className='p-1 absolute rounded-full' style={write(props.scores.SocialHealth, 198)}>{props.scores.SocialHealth.toFixed(1)}</h1>
+        </div>
+    )}
     return(
         <div className='flex flex-col xl:flex-row justify-center items-center'>
+            <div className='pt-4 block xl:hidden'>
+                {// Petal graph (mobile)
+                graph()}
+            </div>
             {
                 // Labels (left)
             }
             <div id='labels-left'>
                 <Label label={labels.PhysicalHealth} pos={{x:1,y:0}} score={props.scores.PhysicalHealth}/>
-                <Label label={labels.SocialHealth} pos={{x:2,y:2}} score={props.scores.SocialHealth}/>
-                <Label label={labels.SpiritualHealth} pos={{x:0,y:1}} score={props.scores.SpiritualHealth}/>
+                <Label label={labels.SocialHealth} pos={{x:2,y:1}} score={props.scores.SocialHealth}/>
+                <Label label={labels.SpiritualHealth} pos={{x:0,y:0}} score={props.scores.SpiritualHealth}/>
             </div>
-            {
-                // Petal graph
-            }
-            <div id='graph' className={`mx-8 w-56 relative`} style={{height:'14rem'}}>
-                {
-                    // Central bulb
-                }
-                <img src={bulb} className='absolute h-auto z-10' style={{width: `${w.bulb}rem`, top:`${centerBulb()}rem`, left:`${centerBulb()}rem`}}/>
-                {
-                    // Petal outlines
-                }
-                <img src={petalOutline} className='absolute h-auto' style={place(5, 270)}/>
-                <img src={petalOutline} className='absolute h-auto' style={place(5, 342)}/>
-                <img src={petalOutline} className='absolute h-auto' style={place(5, 54)}/>
-                <img src={petalOutline} className='absolute h-auto' style={place(5, 126)}/>
-                <img src={petalOutline} className='absolute h-auto' style={place(5, 198)}/>
-                {
-                    // Petals showing score
-                }
-                <img src={petalForPH} className='absolute h-auto' style={place(props.scores.PhysicalHealth, 270)}/>
-                <h1 className='p-1 absolute rounded-full' style={write(props.scores.PhysicalHealth, 270)}>{props.scores.PhysicalHealth.toFixed(1)}</h1>
-                <img src={petalForEH} className='absolute h-auto' style={place(props.scores.EmotionalHealth, 342)}/>
-                <h1 className='p-1 absolute rounded-full' style={write(props.scores.EmotionalHealth, 342)}>{props.scores.EmotionalHealth.toFixed(1)}</h1>
-                <img src={petalForCH} className='absolute h-auto' style={place(props.scores.CognitiveHealth, 54)}/>
-                <h1 className='p-1 absolute rounded-full' style={write(props.scores.CognitiveHealth, 54)}>{props.scores.CognitiveHealth.toFixed(1)}</h1>
-                <img src={petalForSpH} className='absolute h-auto' style={place(props.scores.SpiritualHealth, 126)}/>
-                <h1 className='p-1 absolute rounded-full' style={write(props.scores.SpiritualHealth, 126)}>{props.scores.SpiritualHealth.toFixed(1)}</h1>
-                <img src={petalForSoH} className='absolute h-auto' style={place(props.scores.SocialHealth, 198)}/>
-                <h1 className='p-1 absolute rounded-full' style={write(props.scores.SocialHealth, 198)}>{props.scores.SocialHealth.toFixed(1)}</h1>
+            <div className='hidden xl:block'>
+                {// Petal graph (desktop)
+                graph()}
             </div>
             {
                 // Labels (right)
