@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~animate.css/animate.css";
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;500&family=Open+Sans:wght@300;500&display=swap');
 
@@ -18,7 +19,7 @@ html, body, #app, #root>div {
 }
 
 .bg-wavy {
-    background: linear-gradient(275deg, #ffc700, #ffc700, #ffc700, #ff8f00, #ff005d, #ffc700);
+    background: linear-gradient(275deg, #66ac0a, #ffe600, #66ac0a);
     background-size: 1200% 1200%;
 
     -webkit-animation: AnimationName 14s ease infinite;

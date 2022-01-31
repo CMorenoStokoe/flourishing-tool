@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {question, questionnaire, results} from '../model/types';
 import {questions} from '../assets/questionnaire';
+import { ThemeButton } from "./components";
 // Import assets
 import {labels, graphLabel} from '../assets/labels';
-import petalLogo from '../assets/gfx/logo-petal.svg'
 import bulb from '../assets/gfx/flourishing_bulb_petal.svg';
 import petalOutline from '../assets/gfx/flourishing_outline_petal.svg';
 import petalForPH from '../assets/gfx/flourishing_red_petal.svg';
@@ -16,6 +16,7 @@ import s2 from '../assets/gfx/petal_s2.svg';
 import s3 from '../assets/gfx/petal_s3.svg';
 import s4 from '../assets/gfx/petal_s5.svg';
 import s5 from '../assets/gfx/petal_s4.svg';
+import flowerGIF from '../assets/gfx/petal-flower.gif';
 
 function ToggleAnswersButton(props:{
     onClick: Function;
@@ -45,7 +46,7 @@ function Label(props:{
     score: number;
 }):JSX.Element{
     return(
-        <div className={`p-2 xl:py-${props.pos.y*4} xl:pr-${props.pos.x*4} w-52 max-w-52 text-xs relative flex flex-col justify-center items-center`}>
+        <div className={`p-2 lg:py-${props.pos.y*4} lg:pr-${props.pos.x*4} w-52 max-w-52 text-xs relative flex flex-col justify-center items-center`}>
             <div className='flex flex-col items-center'>
                 <p className='p-1 rounded-full relative border border-white shadow' style={{color:'white', background: props.label.color, top:'1rem', left:'1rem'}}>
                     {props.score.toFixed(1)}
@@ -149,27 +150,18 @@ function Graph(props:{
         </div>
     )}
     return(
-        <div className='flex flex-col xl:flex-row justify-center items-center'>
-            <div className='pt-4 block xl:hidden'>
-                {// Petal graph (mobile)
-                graph()}
-            </div>
+        <div className='flex flex-col lg:flex-row justify-center items-center'>
+            <div id='Graph(Mobile)' className='pt-4 block lg:hidden animate__animated animate__bounceIn animate__delay-2s'>{graph()}</div>
             {
                 // Labels (left)
             }
-            <div id='labels-left'>
+            <div id='Labels1-3' className='animate__animated animate__fadeIn animate__delay-3s'>
                 <Label label={labels.PhysicalHealth} pos={{x:1,y:0}} score={props.scores.PhysicalHealth}/>
                 <Label label={labels.SocialHealth} pos={{x:2,y:1}} score={props.scores.SocialHealth}/>
                 <Label label={labels.SpiritualHealth} pos={{x:0,y:0}} score={props.scores.SpiritualHealth}/>
             </div>
-            <div className='hidden xl:block'>
-                {// Petal graph (desktop)
-                graph()}
-            </div>
-            {
-                // Labels (right)
-            }
-            <div id='labels-right'>
+            <div id='Graph(Desktop)' className='hidden lg:block animate__animated animate__bounceIn animate__delay-2s'>{graph()}</div>
+            <div id='Labels4-5' className='animate__animated animate__fadeIn animate__delay-3s'>
                 <Label label={labels.EmotionalHealth} pos={{x:0,y:2}} score={props.scores.EmotionalHealth}/>
                 <Label label={labels.CognitiveHealth} pos={{x:0,y:1}} score={props.scores.CognitiveHealth}/>
             </div>
@@ -266,67 +258,57 @@ export function Results(props:{
     onClick: {
         viewMeasure: Function;
         loadResults: Function;
-        generateCode: Function;
     }
 }):JSX.Element {
-    const [graph, showGraph] = useState<boolean>(true);
-    const [responses, showResponses] = useState<boolean>(false);
+    const [showResponses, setShowResponses] = useState<boolean>(false);
     const [newCode, setNewCode] = useState<string>('');
 
     // Show results
     if(props.progress<=1){ // If measure not finished
         return(
-            <div className='flex flex-col justify-center items-center'>
-                <div className='m-2 p-8 rounded bg-white shadow-xl'>
-                    <h1 className='p-2 text-3xl text-gray-500'>
+            <div className='h-3/4 flex flex-col justify-center items-center'>
+                <div className='m-2 p-8 rounded bg-green-600 text-white shadow-xl'>
+                    <h1 className='p-2 text-3xl'>
                         Your results will be shown here!
                     </h1>
-                    <button className='m-4 p-3 rounded-xl bg-green-600 text-white' onClick={()=>{props.onClick.viewMeasure()}}>
-                        <img src={petalLogo} className='mr-2 w-8 h-auto' style={{display: 'inline'}}/>
-                        Take your measure now
-                    </button>
+                    <ThemeButton value='Take your measure now' onClick={()=>{props.onClick.viewMeasure()}} />
                     <h1 className='text-2xl font-medium'>OR</h1>
                     <p>Enter a code to load previous results:</p>
                     <input id='codeInput' className='m-2 p-2 rounded border' type="text" name="code"
                         value = {newCode}
                         onChange={(e) => {setNewCode(e.target.value)}}
                     />
-                    <button className='m-2 p-2 rounded bg-gray-600 text-white' 
+                    <button className='m-2 p-3 rounded bg-green-100 text-black hover:bg-green-800 hover:text-white' 
                         onClick={()=>{props.onClick.loadResults(newCode)}}>
-                        Load responses
+                        <h1>Load code</h1>
                     </button>
                 </div>
             </div>
         )
     } else { // If measure finished
         return(
-            <div className='w-full flex flex-col justify-center items-center'>                
-                {
-                    // Save code
-                }
-                <div className='m-2 bg-white text-sm rounded-xl self-end flex flex-row justify-center align-center'>
-                    <button  className='p-2 rounded-xl bg-yellow-500 text-white' 
-                        onClick={()=>{props.onClick.generateCode()}}>
-                        Save code
-                    </button>
-                    <p className='p-2'>{props.code}</p>
+            <div className='w-full relative flex flex-col justify-center items-center'>      
+
+                <div id='SaveCode' className='m-2 lg:ml-2 bg-white text-sm rounded-xl lg:self-end flex flex-row justify-center align-center'>
+                    <p  className='p-2 rounded-xl bg-yellow-500 text-white'> Your code </p>
+                    <input value={props.code} type='text' size={37} readOnly className='p-2 w-full rounded transition-all text-xs lg:text-base'/>
                 </div>
 
-                {
-                    // Graph
-                }    
-                <h1 className='p-4 text-3xl'>Your results</h1>
-                {graph ? <Graph scores={props.scores} /> : ''}
-
-                {
-                    // Answers
-                }
-                <div id='answers' className='m-2 p-4 bg-white rounded-xl'>
+                <h1 id='Graph' className='p-4 text-3xl border-b border-gray-300'>Your results</h1>
+                <div className='absolute top-48 lg:top-1/2 animate__animated animate__fadeOut animate__delay-2s'>
+                    <img className='h-12 inline' src={flowerGIF} />
+                    <p>Loading...</p>
+                </div>
+                <div className='animate__animated animate__bounceIn animate__delay-2s'>
+                    <Graph scores={props.scores} />
+                </div>
+                
+                <div id='Answers' className='m-2 p-4 bg-white rounded-xl'>
                     <div className='p-2 flex flex-row justify-between items-center'>
                         <h1 className='px-2 text-2xl'>Your answers</h1>
-                        <ToggleAnswersButton onClick={()=>{showResponses(!responses)}}/>
+                        <ToggleAnswersButton onClick={()=>{setShowResponses(!showResponses)}}/>
                     </div>
-                    {responses ? <Answers responses={props.responses} scores={props.scores} /> : ''}
+                    {showResponses ? <Answers responses={props.responses} scores={props.scores} /> : ''}
                 </div>
             </div>
         )

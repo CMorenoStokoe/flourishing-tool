@@ -7,15 +7,15 @@ import {questions} from './assets/questionnaire';
 import logo from './assets/gfx/logo-fe.svg';
 // Views
 import {Splash} from './templates/splash';
+import {Instructions} from './templates/instructions';
 import {Questionnaire} from './templates/questionnaire';
 import {Results} from './templates/results';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'splash' | 'questionnaire' | 'results' >('splash');
+  const [view, setView] = useState<'splash' | 'instructions' | 'questionnaire' | 'results' >('splash');
   const [recordedAnswers, recordAnswers] = useState<questionnaire>(questions);
   const [progress, setProgress] = useState<number>(0);
   const [code, setCode] = useState<string>('');
-  const [showInstructions, setShowInstructions] = useState<boolean>(true);
 
   const remainingQuestions = (): question[] => {
     // Get array of unanswered questions
@@ -53,6 +53,8 @@ const App: React.FC = () => {
 
     // Continue to results once finished
     if(remainingQuestions().length === 0){
+      const generatedCode = encodeResponses();
+      setCode(generatedCode);
       setView('results');
     };
   }
@@ -125,19 +127,16 @@ const App: React.FC = () => {
   const content = (): JSX.Element => {
     switch(view){
       case 'splash': return(
-        <Splash 
-          onClick={{
-            start: ()=>{setView('questionnaire')}
-          }}
-        />
+        <Splash onClick={{start: ()=>{ setView('instructions') }}}/>
       );
+      case 'instructions': return(
+        <Instructions onClick={{start: ()=>{ setView('questionnaire') }}}/>
+      )
       case 'questionnaire': return(
         <Questionnaire 
           progress={progress}
-          showInstructions={showInstructions}
           questions={sample( remainingQuestions() )}
           onClick={{
-            dismissInstructions: ()=>{setShowInstructions(false)},
             continue: (answers:question[]) => {formContinueAction(answers)},
             back: ()=>{setView('results')}
           }}
@@ -152,7 +151,6 @@ const App: React.FC = () => {
           onClick={{
             viewMeasure: ()=>{setView('questionnaire')},
             loadResults: (newCode:string)=>{loadResponses(newCode)},
-            generateCode: () => {setCode( encodeResponses() )}
           }}
         />
       );
@@ -163,26 +161,25 @@ const App: React.FC = () => {
   // Show view
   return (
     <div className="App h-full">
-
-      {
-        // Navbar
-      }
       <hr id='border-theme-top' className='border-2' style={{borderColor: '#C7D64F'}}/>
-      <nav className='p-2 flex flex-row justify-between items-end bg-white text-gray-500'>
-        <div id='nav-brand' className='flex flex-row justify-start items-end'>
-          <img src={logo} className='m-2 h-16 w-auto'/>
-          <h1 className='mx-2 p-1 text-3xl'>
+      <nav className='p-2 flex flex-row justify-between items-end bg-green-100 text-green-600'>
+        
+        <div id='Branding' className='flex flex-row lg:justify-start items-end'>
+          <img src={logo} className='m-2 h-12 md:h-16 w-auto'/>
+          <h1 className='mx-2 p-1 text-lg hidden text-3xl md:flex '>
             Flourishing Online
           </h1>
         </div>
-        <div id='nav-links' className='text-sm'>
+
+        <div id='Links' className='p-2 text-sm lg:text-right'>
           <button className='px-2 ' onClick={()=>{setView('splash')}}>Home</button>
-          <button className='px-2 border-l' style={{borderColor: '#C7D64F'}} onClick={()=>{setView('questionnaire')}}>Measure</button>
-          <button className='px-2 border-l' style={{borderColor: '#C7D64F'}} onClick={()=>{setView('results')}}>Results</button>
-          <a className='px-2 border-l' style={{borderColor: '#C7D64F'}} href='https://flourishingeducation.co.uk/' target='_blank'>About</a>
+          <button className='px-2 border-l border-green-200' onClick={()=>{setView('instructions')}}>About</button>
+          <button className='px-2 border-l border-green-200' onClick={()=>{setView('questionnaire')}}>Measure</button>
+          <button className='px-2 border-l border-green-200' onClick={()=>{setView('results')}}>Results</button>
         </div>
       </nav>
-      <div id='progress-bar' 
+
+      <div id='Progress'
         className='mb-4 p-2 bg-gray-100 flex flex-row justify-center items-center' 
         style={{display: progress>0&&progress<100 ? 'flex' : 'none'}}
       >

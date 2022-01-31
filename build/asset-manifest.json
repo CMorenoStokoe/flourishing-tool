@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "./static/css/main.7f09145c.chunk.css",
-    "main.js": "./static/js/main.90423e1c.chunk.js",
-    "main.js.map": "./static/js/main.90423e1c.chunk.js.map",
+    "main.css": "./static/css/main.59ebdef6.chunk.css",
+    "main.js": "./static/js/main.20a60c1f.chunk.js",
+    "main.js.map": "./static/js/main.20a60c1f.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.26a4e527.js",
     "runtime-main.js.map": "./static/js/runtime-main.26a4e527.js.map",
+    "static/css/2.96b26686.chunk.css": "./static/css/2.96b26686.chunk.css",
     "static/js/2.2bca2bb7.chunk.js": "./static/js/2.2bca2bb7.chunk.js",
     "static/js/2.2bca2bb7.chunk.js.map": "./static/js/2.2bca2bb7.chunk.js.map",
     "static/js/3.5b51f813.chunk.js": "./static/js/3.5b51f813.chunk.js",
     "static/js/3.5b51f813.chunk.js.map": "./static/js/3.5b51f813.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.7f09145c.chunk.css.map": "./static/css/main.7f09145c.chunk.css.map",
+    "static/css/2.96b26686.chunk.css.map": "./static/css/2.96b26686.chunk.css.map",
+    "static/css/main.59ebdef6.chunk.css.map": "./static/css/main.59ebdef6.chunk.css.map",
     "static/js/2.2bca2bb7.chunk.js.LICENSE.txt": "./static/js/2.2bca2bb7.chunk.js.LICENSE.txt",
     "static/media/bg.0154e95c.svg": "./static/media/bg.0154e95c.svg",
     "static/media/flourishing_bulb_petal.66e30c15.svg": "./static/media/flourishing_bulb_petal.66e30c15.svg",
@@ -22,8 +24,9 @@
     "static/media/flourishing_yellow_petal.3e9fb60d.svg": "./static/media/flourishing_yellow_petal.3e9fb60d.svg",
     "static/media/logo-fe.680c79f8.svg": "./static/media/logo-fe.680c79f8.svg",
     "static/media/logo-petal.8a41023e.svg": "./static/media/logo-petal.8a41023e.svg",
+    "static/media/petal-flower-lg.55e4f803.gif": "./static/media/petal-flower-lg.55e4f803.gif",
     "static/media/petal-flower.2bc17ffe.gif": "./static/media/petal-flower.2bc17ffe.gif",
-    "static/media/petal-snapshot.c2e4e564.gif": "./static/media/petal-snapshot.c2e4e564.gif",
+    "static/media/petal-snapshot-lg.5ea3b092.gif": "./static/media/petal-snapshot-lg.5ea3b092.gif",
     "static/media/petal_CognitiveHealth.d288a96c.svg": "./static/media/petal_CognitiveHealth.d288a96c.svg",
     "static/media/petal_EmotionalHealth.bf985abb.svg": "./static/media/petal_EmotionalHealth.bf985abb.svg",
     "static/media/petal_PhysicalHealth.a946e99a.svg": "./static/media/petal_PhysicalHealth.a946e99a.svg",
@@ -38,8 +41,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.26a4e527.js",
+    "static/css/2.96b26686.chunk.css",
     "static/js/2.2bca2bb7.chunk.js",
-    "static/css/main.7f09145c.chunk.css",
-    "static/js/main.90423e1c.chunk.js"
+    "static/css/main.59ebdef6.chunk.css",
+    "static/js/main.20a60c1f.chunk.js"
   ]
 }

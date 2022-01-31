@@ -1,5 +1,6 @@
 import bg from '../assets/gfx/bg.svg';
-import petalLogo from '../assets/gfx/logo-petal.svg'
+import {ThemeButton} from '../templates/components';
+import flowerGIF from '../assets/gfx/petal-flower.gif';
 
 export function Splash(props:{
     onClick: {
@@ -7,29 +8,31 @@ export function Splash(props:{
     }
 }):JSX.Element {
     return(
-        <div className='w-full h-3/4 flex flex-col justify-center items-center' style={{
-            background: `url(${bg})`, 
-            backgroundRepeat: 'no-repeat', 
-            backgroundPosition: 'fixed', 
-            backgroundSize: '100% auto'
-        }}>
-            <div className='m-2 p-8 rounded bg-white shadow-xl'>
-                <h1 className='p-2 text-3xl text-gray-500'>
-                    Flourishing Online
-                </h1>
-                <h1 className='p-2 text-3xl'>
-                    Assessment tool for wellbeing
-                </h1>
-                <p className='p-2 text-lg'>
-                    Empower students to flourish and be well
-                </p>
-                <a className='m-2 p-3 rounded-xl bg-gray-600 text-white' href='https://flourishingeducation.co.uk' target='_blank' rel='noreferrer'>
-                    Learn more
-                </a>          
-                <button className='m-4 p-3 rounded-xl bg-green-600 text-white' onClick={()=>{props.onClick.start()}}>
-                    <img src={petalLogo} className='mr-2 w-8 h-auto' style={{display: 'inline'}}/>
-                    Begin here
-                </button>
+        <div className='w-full h-3/4 relative flex flex-col justify-center items-center '>
+            
+            <div className='absolute top-1/2 animate__animated animate__fadeOut animate__delay-2s'>
+                <img className='h-12 inline' src={flowerGIF} />
+            </div>
+
+            <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center transition-all animate__animated animate__fadeIn animate__delay-2s' style={{
+                background: `url(${bg})`, 
+                backgroundRepeat: 'no-repeat', 
+                backgroundPosition: 'fixed', 
+                backgroundSize: '100% auto'
+            }}>
+                <div className='m-2 p-8 rounded bg-green-600 text-white shadow-xl'>
+                    <h1 className='p-2 text-3xl text-green-400'>
+                        Flourishing Online
+                    </h1>
+                    <h1 className='p-2 text-3xl'>
+                        Assessment tool for wellbeing
+                    </h1>
+                    <p className='p-2 text-lg'>
+                        Empower ALL students and staff to flourish and be well
+                    </p>
+
+                    <ThemeButton value='Begin here' variant='default' animateAfter='0ms' onClick={props.onClick.start}/>
+                </div>
             </div>
         </div>
     )
