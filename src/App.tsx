@@ -162,7 +162,7 @@ const App: React.FC = () => {
   return (
     <div className="App h-full">
       <hr id='border-theme-top' className='border-2' style={{borderColor: '#C7D64F'}}/>
-      <nav className='p-2 flex flex-row justify-between items-end bg-green-100 text-green-600'>
+      <nav className='p-2 flex flex-row justify-between items-end bg-white text-green-600'>
         
         <div id='Branding' className='flex flex-row lg:justify-start items-end'>
           <img src={logo} className='m-2 h-12 md:h-16 w-auto'/>
