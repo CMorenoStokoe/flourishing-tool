@@ -189,11 +189,11 @@ function Answers(props:{responses: questionnaire; scores: results;}){
                 <tr key={key} className='m-2 p-2'>
                     <td key={`${key}_id`} className='p-2 w-4'>{count}.</td>
                     <td key={`${key}_score`} 
-                        className={`p-2 w-8 rounded-l-full  ${value.score<3 ? 'bg-gray-100' : ''}`}>
+                        className={`p-2 w-8 rounded-l-full  ${value.score<3 ? 'bg-yellow-200' : ''}`}>
                         <img src={scoreIcons[value.score]} className='w-8 h-8'/>
                     </td>
                     <td key={`${key}_text`} 
-                        className={`p-2 text-gray-800 rounded-r-full ${value.score<3 ? 'bg-gray-100' : ''}`}
+                        className={`p-2 text-gray-800 rounded-r-full ${value.score<3 ? 'bg-yellow-200' : ''}`}
                         style={{whiteSpace: 'normal'}}
                     >
                             {value.text}
@@ -205,9 +205,26 @@ function Answers(props:{responses: questionnaire; scores: results;}){
     } 
     return(
         <div key={'t_responses'} className='m-2 p-2 text-left'>
-
+            <div className='mb-2 w-full flex justify-center items-center'>
+                <div className='p-2 pt-0 m-2 mt-0 rounded'>
+                    <p className='p-2 pt-0 flex flex-row justify-center items-end text-spring-400'>
+                        <strong className='p-1'>Languishing</strong>
+                        <p className='p-1 flex flex-col justify-center items-center'>1<img src={s1} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>2<img src={s2} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>3<img src={s3} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>4<img src={s4} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>5<img src={s5} className='h-4'/></p>
+                        <strong className='p-1'>Flourishing</strong>
+                    </p>
+                    <p className='p-2 bg-yellow-200 flex flex-row justify-start items-center rounded-full'>
+                        <div className='flex flex-row'><img src={s1} className='h-4 m-1'/>/<img src={s2} className='h-4 m-1'/></div>
+                        <p className='p-2'>We have highlight any areas for growth where you scored below 3</p>
+                    </p>
+                </div>
+            </div>
+            
             <h1 id='PhysicalQs' className='p-2 text-lg text-white rounded' style={{background: labels.PhysicalHealth.color}}>
-                Physical Health
+                Physical Health (diet, sleep, routine, rest, exercise)
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.PhysicalHealth.toFixed(1)}
                 </span>
@@ -215,7 +232,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             <table className='m-2 p-4 w-full'><tbody>{answers.PhysicalHealth}</tbody></table>
             
             <h1 id='CognitiveQs' className='p-2 text-lg text-white rounded' style={{background: labels.CognitiveHealth.color}}>
-                Cognitive Health
+                Cognitive Health (thinking approach, concentration, switching off)
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.CognitiveHealth.toFixed(1)}
                 </span>    
@@ -223,7 +240,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             <table className='m-2 p-4 w-full'><tbody>{answers.CognitiveHealth}</tbody></table>
 
             <h1 id='EmotionalQs' className='p-2 text-lg text-white rounded' style={{background: labels.EmotionalHealth.color}}>
-                Emotional Health
+                Emotional Health (feelings, regulation, expression)
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.EmotionalHealth.toFixed(1)}
                 </span>
@@ -231,7 +248,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             <table className='m-2 p-4 w-full'><tbody>{answers.EmotionalHealth}</tbody></table>
             
             <h1 id='SocialQs' className='p-2 text-lg text-white rounded' style={{background: labels.SocialHealth.color}}>
-                Social Health
+                Social Health (relationships, confidence, managing conflicts)
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.SocialHealth.toFixed(1)}
                 </span>
@@ -239,7 +256,7 @@ function Answers(props:{responses: questionnaire; scores: results;}){
             <table className='m-2 p-4 w-full'><tbody>{answers.SocialHealth}</tbody></table>
 
             <h1 id='SpiritualQs' className='p-2 text-lg text-white rounded' style={{background: labels.SpiritualHealth.color}}>
-                Spiritual Health
+                Spiritual Health (purpose, values, goals)
                 <span className='p-1 m-1 rounded-full' style={{color:'white', background:'black', display:'inline'}}>
                     {props.scores.SpiritualHealth.toFixed(1)}
                 </span>
@@ -267,7 +284,7 @@ export function Results(props:{
     if(props.progress<=1){ // If measure not finished
         return(
             <div className='h-3/4 flex flex-col justify-center items-center'>
-                <div className='m-2 p-8 rounded bg-green-600 text-white shadow-xl'>
+                <div className='m-2 p-8 rounded bg-spring-400 text-white shadow-xl'>
                     <h1 className='p-2 text-3xl'>
                         Your results will be shown here!
                     </h1>
@@ -278,7 +295,7 @@ export function Results(props:{
                         value = {newCode}
                         onChange={(e) => {setNewCode(e.target.value)}}
                     />
-                    <button className='m-2 p-3 rounded bg-green-100 text-black hover:bg-green-800 hover:text-white' 
+                    <button className='m-2 p-3 rounded bg-spring-200 text-black hover:bg-spring-300 hover:text-white' 
                         onClick={()=>{props.onClick.loadResults(newCode)}}>
                         <h1>Load code</h1>
                     </button>
@@ -287,29 +304,40 @@ export function Results(props:{
         )
     } else { // If measure finished
         return(
-            <div className='w-full relative flex flex-col justify-center items-center'>      
+            <div className='w-full relative flex flex-col justify-center items-center'>   
 
-                <div id='SaveCode' className='m-2 lg:ml-2 bg-white text-sm rounded-xl lg:self-end flex flex-row justify-center align-center'>
-                    <p  className='p-2 rounded-xl bg-yellow-500 text-white'> Your code </p>
-                    <input value={props.code} type='text' size={37} readOnly className='p-2 w-full rounded transition-all text-xs lg:text-base'/>
-                </div>
-
-                <h1 id='Graph' className='p-4 text-3xl border-b border-gray-300'>Your results</h1>
-                <div className='absolute top-48 lg:top-1/2 animate__animated animate__fadeOut animate__delay-2s'>
-                    <img className='h-12 inline' src={flowerGIF} />
-                    <p>Loading...</p>
-                </div>
-                <div className='animate__animated animate__bounceIn animate__delay-2s'>
-                    <Graph scores={props.scores} />
-                </div>
+                <div className='m-2 p-2 lg:p-8 lg:pt-2 bg-spring-100 flex flex-col justify-center items-center relative rounded-xl'>
+                    <h1 id='Graph' className='p-4 text-3xl text-spring-400'>Your results</h1>
+                    <div className='absolute top-48 lg:top-1/2 animate__animated animate__fadeOut animate__delay-2s'>
+                        <img className='h-12 inline' src={flowerGIF} />
+                        <p>Loading...</p>
+                    </div>
+                    <div className='animate__animated animate__bounceIn animate__delay-2s'>
+                        <Graph scores={props.scores} />
+                    </div>
+                    <p className='p-2 flex flex-row justify-center items-end text-spring-400'>
+                        <strong className='p-1'>Languishing</strong>
+                        <p className='p-1 flex flex-col justify-center items-center'>1<img src={s1} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>2<img src={s2} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>3<img src={s3} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>4<img src={s4} className='h-4'/></p>
+                        <p className='p-1 flex flex-col justify-center items-center'>5<img src={s5} className='h-4'/></p>
+                        <strong className='p-1'>Flourishing</strong>
+                    </p>
+                    <div id='SaveCode' className='m-2 mb-0 w-full text-xs text-spring-300 flex flex-row justify-center align-center'>
+                        <p className='p-2 pb-0'> If you want to reproduce these results here's a direct code: </p>
+                        <input value={props.code} type='text' size={37} readOnly className='p-2 bg-spring-100 rounded transition-all'/>
+                    </div>
+                </div>  
                 
-                <div id='Answers' className='m-2 p-4 bg-white rounded-xl'>
+                <div id='Answers' className='m-2 p-4 bg-spring-100 rounded-xl'>
                     <div className='p-2 flex flex-row justify-between items-center'>
-                        <h1 className='px-2 text-2xl'>Your answers</h1>
+                        <h1 className='px-2 text-2xl text-spring-400'>Your answers</h1>
                         <ToggleAnswersButton onClick={()=>{setShowResponses(!showResponses)}}/>
                     </div>
                     {showResponses ? <Answers responses={props.responses} scores={props.scores} /> : ''}
                 </div>
+
             </div>
         )
     }

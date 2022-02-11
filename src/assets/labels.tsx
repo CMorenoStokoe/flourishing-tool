@@ -14,31 +14,31 @@ export interface graphLabel {
 export const labels:Record<'PhysicalHealth' | 'SpiritualHealth' | 'SocialHealth' | 'EmotionalHealth' | 'CognitiveHealth', graphLabel> = {
     PhysicalHealth: {
         title: 'Physical Health',
-        subtitle: 'How well you take care of your body',
+        subtitle: 'How well you take care of your body and reduce risk of illness and injury.',
         color: '#EA5455',
         icon: PhysicalHealth
     },
     SpiritualHealth:{
         title: 'Spiritual Health',
-        subtitle: 'A connection to the wider and personal meanings behind your actions',
+        subtitle: 'Noticing our passions and purpose or connection with wider society.',
         color: '#2D4059',
         icon: SpiritualHealth
     },
     SocialHealth:{
         title: 'Social Health',
-        subtitle: 'Quality social relationships and support networks',
+        subtitle: 'Taking care of social relationships and support networks.',
         color: '#FFB400',
         icon: SocialHealth
     },
     EmotionalHealth:{
         title: 'Emotional Health',
-        subtitle: 'Your understanding of your emotions',
+        subtitle: 'Feeling in control of your emotions.',
         color: '#F07B3F',
         icon: EmotionalHealth
     },
     CognitiveHealth:{
         title: 'Cognitive Health',
-        subtitle: 'The pattern of your internal thoughts and “mental chatter”',
+        subtitle: 'Adopting a healthy mindset and outlook on life.',
         color: '#00B8A9',
         icon: CognitiveHealth
     }

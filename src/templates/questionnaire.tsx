@@ -81,15 +81,17 @@ export function Questionnaire(props:{
         return(
             <div>
                 {renderQuestions()}
-                <button className='m-2 p-3 rounded-xl bg-green-600 text-white hover:bg-green-400 animate__animated animate__fadeIn animate__delay-1s' onClick={validateFormAndContinue}>
-                    <h1>{props.questions.length < 5 ? 'Finish' : 'Continue'}</h1>
-                </button>
+                <ThemeButton 
+                    value={props.questions.length < 5 ? 'Finish' : 'Continue'}
+                    animateAfter='1s'
+                    onClick={validateFormAndContinue}
+                />
             </div>
         )
     }else{
         return(
             <div className='h-3/4 flex flex-col justify-center items-center'>
-                <div className='p-4 m-2 max-w-lg rounded bg-green-600 text-white'>
+                <div className='p-4 m-2 max-w-lg rounded bg-spring-400 text-white'>
                     <h1 className='m-2 text-2xl'>
                         All done! 
                     </h1>

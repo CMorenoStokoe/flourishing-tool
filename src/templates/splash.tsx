@@ -20,15 +20,13 @@ export function Splash(props:{
                 backgroundPosition: 'fixed', 
                 backgroundSize: '100% auto'
             }}>
-                <div className='m-2 p-8 rounded bg-green-600 text-white shadow-xl'>
-                    <h1 className='p-2 text-3xl text-green-400'>
-                        Flourishing Online
-                    </h1>
+                <div className='m-2 p-8 rounded bg-spring-400 text-white shadow-xl'>
                     <h1 className='p-2 text-3xl'>
-                        Assessment tool for wellbeing
+                        Flourish!
                     </h1>
                     <p className='p-2 text-lg'>
-                        Empower ALL students and staff to flourish and be well
+                        Improve your wellbeing with a quick quiz.
+                        <br/>Designed for everyone.
                     </p>
 
                     <ThemeButton value='Begin here' variant='default' animateAfter='0ms' onClick={props.onClick.start}/>

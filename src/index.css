@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;500&family=Open+Sans:wght@300;500&display=swap');
 
 body{
-    background: rgb(235,235,235);
+    background: none; /*rgb(247, 247, 145)*/
 }
 *{
 	font-family: 'Open Sans', sans-serif;

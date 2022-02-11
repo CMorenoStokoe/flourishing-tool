@@ -7,8 +7,8 @@ export function ThemeButton(props:{
     className?: string,
     variant?: 'alt' | 'default'
 }):JSX.Element{
-    const defaultColors = ' bg-green-100 text-black hover:bg-green-800 hover:text-white ';
-    const altColors =  ' bg-green-800 text-white hover:bg-green-100 hover:text-black ';
+    const defaultColors = 'bg-spring-300 text-white hover:bg-orange hover:text-white ';
+    const altColors =  'bg-orange text-white hover:bg-spring-300 hover:text-black ';
     return(
         <button 
             className={'m-4 p-3 rounded-xl '.concat(

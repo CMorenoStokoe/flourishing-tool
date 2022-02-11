@@ -10,6 +10,7 @@ import {Splash} from './templates/splash';
 import {Instructions} from './templates/instructions';
 import {Questionnaire} from './templates/questionnaire';
 import {Results} from './templates/results';
+import { Type } from "typescript";
 
 const App: React.FC = () => {
   const [view, setView] = useState<'splash' | 'instructions' | 'questionnaire' | 'results' >('splash');
@@ -159,23 +160,22 @@ const App: React.FC = () => {
   }
 
   // Show view
+  const isViewActive = (o:string) => {
+    if(view===o){
+      return(` text-spring-400`);
+    } else {
+      return(` text-white hover:text-spring-400 `);
+    }
+  }
   return (
     <div className="App h-full">
-      <hr id='border-theme-top' className='border-2' style={{borderColor: '#C7D64F'}}/>
-      <nav className='p-2 flex flex-row justify-between items-end bg-white text-green-600'>
-        
-        <div id='Branding' className='flex flex-row lg:justify-start items-end'>
-          <img src={logo} className='m-2 h-12 md:h-16 w-auto'/>
-          <h1 className='mx-2 p-1 text-lg hidden text-3xl md:flex '>
-            Flourishing Online
-          </h1>
-        </div>
-
-        <div id='Links' className='p-2 text-sm lg:text-right'>
-          <button className='px-2 ' onClick={()=>{setView('splash')}}>Home</button>
-          <button className='px-2 border-l border-green-200' onClick={()=>{setView('instructions')}}>About</button>
-          <button className='px-2 border-l border-green-200' onClick={()=>{setView('questionnaire')}}>Measure</button>
-          <button className='px-2 border-l border-green-200' onClick={()=>{setView('results')}}>Results</button>
+      <nav className='p-2 bg-spring-300 flex flex-col text-white rounded-t-xl'>
+        <h1 className='text-2xl text-spring-400'>Flourishing Online</h1>
+        <div id='Links' className='p-2 text-sm flex flex-row justify-center items-center '>
+          <button className={`px-2 ${isViewActive('splash')}`} onClick={()=>{setView('splash')}}>Home</button>
+          <button className={`px-2 ${isViewActive('instructions')} border-l border-spring-200`} onClick={()=>{setView('instructions')}}>About</button>
+          <button className={`px-2 ${isViewActive('questionnaire')} border-l border-spring-200`} onClick={()=>{setView('questionnaire')}}>Quiz</button>
+          <button className={`px-2 ${isViewActive('results')} border-l border-spring-200`} onClick={()=>{setView('results')}}>Results</button>
         </div>
       </nav>
 
@@ -183,7 +183,7 @@ const App: React.FC = () => {
         className='mb-4 p-2 bg-gray-100 flex flex-row justify-center items-center' 
         style={{display: progress>0&&progress<100 ? 'flex' : 'none'}}
       >
-        <h1>Measure in progress:</h1>
+        <h1>Quiz in progress:</h1>
         <div className="m-2 h-4 w-3/4 max-w-xl rounded-xl shadow bg-gray-200">
             <div 
                 className="h-full rounded-xl bg-wavy transition-all duration-1000" 
@@ -192,10 +192,7 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {
-        // Current view
-        content()
-      }
+      <span id='CurrentView' className='rounded-b-xl'>{ content() }</span>
       
     </div>
   );
