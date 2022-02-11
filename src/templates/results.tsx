@@ -45,10 +45,19 @@ function Label(props:{
     };
     score: number;
 }):JSX.Element{
+    const colourByScore= (n:number):string => {
+        if(n<2.5){
+            return('coral');
+        }else if(n<3.5){
+            return('gold');
+        }else{
+            return('green')
+        }
+    }
     return(
         <div className={`p-2 lg:py-${props.pos.y*4} lg:pr-${props.pos.x*4} w-52 max-w-52 text-xs relative flex flex-col justify-center items-center`}>
             <div className='flex flex-col items-center'>
-                <p className='p-1 rounded-full relative border border-white shadow' style={{color:'white', background: props.label.color, top:'1rem', left:'1rem'}}>
+                <p className='p-1 rounded-full relative border border-white shadow' style={{color:'white', background: colourByScore(props.score), top:'1rem', left:'1rem'}}>
                     {props.score.toFixed(1)}
                 </p>
                 <img src={props.label.icon} className='h-8 w-auto'/>
@@ -217,8 +226,8 @@ function Answers(props:{responses: questionnaire; scores: results;}){
                         <strong className='p-1'>Flourishing</strong>
                     </p>
                     <p className='p-2 bg-yellow-200 flex flex-row justify-start items-center rounded-full'>
-                        <div className='flex flex-row'><img src={s1} className='h-4 m-1'/>/<img src={s2} className='h-4 m-1'/></div>
-                        <p className='p-2'>We have highlight any areas for growth where you scored below 3</p>
+                        <div><img src={s1} className='h-4 m-1 inline'/><img src={s2} className='h-4 m-1 inline'/></div>
+                        <p className='p-2'>We have highlighted any areas for growth where you scored below 3</p>
                     </p>
                 </div>
             </div>
@@ -291,7 +300,7 @@ export function Results(props:{
                     <ThemeButton value='Take your measure now' onClick={()=>{props.onClick.viewMeasure()}} />
                     <h1 className='text-2xl font-medium'>OR</h1>
                     <p>Enter a code to load previous results:</p>
-                    <input id='codeInput' className='m-2 p-2 rounded border' type="text" name="code"
+                    <input id='codeInput' className='m-2 p-2 text-black rounded border' type="text" name="code"
                         value = {newCode}
                         onChange={(e) => {setNewCode(e.target.value)}}
                     />
@@ -308,13 +317,6 @@ export function Results(props:{
 
                 <div className='m-2 p-2 lg:p-8 lg:pt-2 bg-spring-100 flex flex-col justify-center items-center relative rounded-xl'>
                     <h1 id='Graph' className='p-4 text-3xl text-spring-400'>Your results</h1>
-                    <div className='absolute top-48 lg:top-1/2 animate__animated animate__fadeOut animate__delay-2s'>
-                        <img className='h-12 inline' src={flowerGIF} />
-                        <p>Loading...</p>
-                    </div>
-                    <div className='animate__animated animate__bounceIn animate__delay-2s'>
-                        <Graph scores={props.scores} />
-                    </div>
                     <p className='p-2 flex flex-row justify-center items-end text-spring-400'>
                         <strong className='p-1'>Languishing</strong>
                         <p className='p-1 flex flex-col justify-center items-center'>1<img src={s1} className='h-4'/></p>
@@ -324,8 +326,15 @@ export function Results(props:{
                         <p className='p-1 flex flex-col justify-center items-center'>5<img src={s5} className='h-4'/></p>
                         <strong className='p-1'>Flourishing</strong>
                     </p>
+                    <div className='absolute top-48 lg:top-1/2 animate__animated animate__fadeOut animate__delay-2s'>
+                        <img className='h-12 inline' src={flowerGIF} />
+                        <p>Drawing...</p>
+                    </div>
+                    <div className='animate__animated animate__bounceIn animate__delay-2s'>
+                        <Graph scores={props.scores} />
+                    </div>
                     <div id='SaveCode' className='m-2 mb-0 w-full text-xs text-spring-300 flex flex-row justify-center align-center'>
-                        <p className='p-2 pb-0'> If you want to reproduce these results here's a direct code: </p>
+                        <p className='p-2 pb-0'> Direct code to reproduce results: </p>
                         <input value={props.code} type='text' size={37} readOnly className='p-2 bg-spring-100 rounded transition-all'/>
                     </div>
                 </div>  

@@ -10,11 +10,11 @@ export function Splash(props:{
     return(
         <div className='w-full h-3/4 relative flex flex-col justify-center items-center '>
             
-            <div className='absolute top-1/2 animate__animated animate__fadeOut animate__delay-2s'>
+            <div className='absolute top-1/2 animate__animated animate__fadeOut animate__delay-1s'>
                 <img className='h-12 inline' src={flowerGIF} />
             </div>
 
-            <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center transition-all animate__animated animate__fadeIn animate__delay-2s' style={{
+            <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center transition-all animate__animated animate__fadeIn animate__delay-1s' style={{
                 background: `url(${bg})`, 
                 backgroundRepeat: 'no-repeat', 
                 backgroundPosition: 'fixed', 
