@@ -95,6 +95,7 @@ const App: React.FC = () => {
     return codeString;
   };
   const codeLikelyValid = (codeString:string) => {
+    // Example valid code: W12345123452134521345234531234521345
     const lengthOfQuestionnaire = Object.entries(questions).length;
     if(codeString.length!==(lengthOfQuestionnaire+1)){
       alert(`Your code "${codeString}" was not ${lengthOfQuestionnaire} digits long. Valid codes are ${lengthOfQuestionnaire} digits long and are a series of numbers (0-5) starting with the character ${leadingLetter}. Please try again and contact support if the problem persists`)
@@ -168,7 +169,7 @@ const App: React.FC = () => {
     }
   }
   return (
-    <div className="App h-full">
+    <div className="App h-full bg-spring-100">
       <nav className='p-2 bg-spring-300 flex flex-col text-white rounded-t-xl'>
         <h1 className='text-2xl text-spring-400'>Flourishing Online</h1>
         <div id='Links' className='p-2 text-sm flex flex-row justify-center items-center '>

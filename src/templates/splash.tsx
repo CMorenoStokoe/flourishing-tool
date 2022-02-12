@@ -26,7 +26,7 @@ export function Splash(props:{
                     </h1>
                     <p className='p-2 text-lg'>
                         Improve your wellbeing with a quick quiz.
-                        <br/>Designed for everyone.
+                        <br/>Designed to empower <strong>all</strong> young people and adults to flourish.
                     </p>
 
                     <ThemeButton value='Begin here' variant='default' animateAfter='0ms' onClick={props.onClick.start}/>

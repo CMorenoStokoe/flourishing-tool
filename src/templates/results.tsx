@@ -297,7 +297,7 @@ export function Results(props:{
                     <h1 className='p-2 text-3xl'>
                         Your results will be shown here!
                     </h1>
-                    <ThemeButton value='Take your measure now' onClick={()=>{props.onClick.viewMeasure()}} />
+                    <ThemeButton value='Take the quiz now' onClick={()=>{props.onClick.viewMeasure()}} />
                     <h1 className='text-2xl font-medium'>OR</h1>
                     <p>Enter a code to load previous results:</p>
                     <input id='codeInput' className='m-2 p-2 text-black rounded border' type="text" name="code"
@@ -313,9 +313,9 @@ export function Results(props:{
         )
     } else { // If measure finished
         return(
-            <div className='w-full relative flex flex-col justify-center items-center'>   
+            <div className='w-full h-full relative bg-white flex flex-col items-center'>   
 
-                <div className='m-2 p-2 lg:p-8 lg:pt-2 bg-spring-100 flex flex-col justify-center items-center relative rounded-xl'>
+                <div className='m-2 mt-4 p-2 lg:p-8 lg:pt-2 bg-spring-100 flex flex-col justify-center items-center relative rounded-xl'>
                     <h1 id='Graph' className='p-4 text-3xl text-spring-400'>Your results</h1>
                     <p className='p-2 flex flex-row justify-center items-end text-spring-400'>
                         <strong className='p-1'>Languishing</strong>
