@@ -181,10 +181,10 @@ const App: React.FC = () => {
       </nav>
 
       <div id='Progress'
-        className='mb-4 p-2 bg-gray-100 flex flex-row justify-center items-center' 
+        className='mb-4 p-2 bg-spring-200 flex flex-row justify-center items-center' 
         style={{display: progress>0&&progress<100 ? 'flex' : 'none'}}
       >
-        <h1>Quiz in progress:</h1>
+        <h1>Quiz progress:</h1>
         <div className="m-2 h-4 w-3/4 max-w-xl rounded-xl shadow bg-gray-200">
             <div 
                 className="h-full rounded-xl bg-wavy transition-all duration-1000" 

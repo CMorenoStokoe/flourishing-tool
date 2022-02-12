@@ -17,15 +17,16 @@ export function Splash(props:{
             <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center transition-all animate__animated animate__fadeIn animate__delay-1s' style={{
                 background: `url(${bg})`, 
                 backgroundRepeat: 'no-repeat', 
-                backgroundPosition: 'fixed', 
-                backgroundSize: '100% auto'
+                backgroundAttachment: 'fixed',
+                backgroundPosition: 'center',
+                backgroundSize: 'auto 75%'
             }}>
                 <div className='m-2 p-8 rounded bg-spring-400 text-white shadow-xl'>
                     <h1 className='p-2 text-3xl'>
                         Flourish!
                     </h1>
                     <p className='p-2 text-lg'>
-                        Improve your wellbeing with a quick quiz.
+                        Improve your wellbeing with this 5 minute quiz.
                         <br/>Designed to empower <strong>all</strong> young people and adults to flourish.
                     </p>
 
