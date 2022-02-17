@@ -169,7 +169,7 @@ const App: React.FC = () => {
     }
   }
   return (
-    <div className="App h-full bg-spring-100">
+    <div className="App h-full">
       <nav className='p-2 bg-spring-300 flex flex-col text-white rounded-t-xl'>
         <h1 className='text-2xl text-spring-400'>Flourishing Online</h1>
         <div id='Links' className='p-2 text-sm flex flex-row justify-center items-center '>
