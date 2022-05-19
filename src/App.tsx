@@ -4,16 +4,16 @@ import './App.css';
 import {question, questionnaire, results} from './model/types';
 // Assets
 import {questions} from './assets/questionnaire';
-import logo from './assets/gfx/logo-fe.svg';
+import logo from './assets/gfx/logo-flourish.svg';
 // Views
-import {Splash} from './templates/splash';
+import {TV, Splash} from './templates/splash';
+import {Welcome} from './templates/welcome';
 import {Instructions} from './templates/instructions';
 import {Questionnaire} from './templates/questionnaire';
 import {Results} from './templates/results';
-import { Type } from "typescript";
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'splash' | 'instructions' | 'questionnaire' | 'results' >('splash');
+  const [view, setView] = useState<'splash' | 'welcome' | 'instructions' | 'questionnaire' | 'results' >('splash');
   const [recordedAnswers, recordAnswers] = useState<questionnaire>(questions);
   const [progress, setProgress] = useState<number>(0);
   const [code, setCode] = useState<string>('');
@@ -129,7 +129,10 @@ const App: React.FC = () => {
   const content = (): JSX.Element => {
     switch(view){
       case 'splash': return(
-        <Splash onClick={{start: ()=>{ setView('instructions') }}}/>
+        <Splash onClick={{start: ()=>{ setView('welcome') }}}/>
+      );
+      case 'welcome': return(
+        <Welcome onClick={{start: ()=>{ setView('instructions') }}}/>
       );
       case 'instructions': return(
         <Instructions onClick={{start: ()=>{ setView('questionnaire') }}}/>
@@ -168,33 +171,43 @@ const App: React.FC = () => {
       return(` text-white hover:text-spring-400 `);
     }
   }
-  return (
-    <div className="App h-full">
-      <nav className='p-2 bg-spring-300 flex flex-col text-white rounded-t-xl'>
-        <h1 className='text-2xl text-spring-400'>Flourishing Online</h1>
-        <div id='Links' className='p-2 text-sm flex flex-row justify-center items-center '>
-          <button className={`px-2 ${isViewActive('splash')}`} onClick={()=>{setView('splash')}}>Home</button>
-          <button className={`px-2 ${isViewActive('instructions')} border-l border-spring-200`} onClick={()=>{setView('instructions')}}>About</button>
-          <button className={`px-2 ${isViewActive('questionnaire')} border-l border-spring-200`} onClick={()=>{setView('questionnaire')}}>Quiz</button>
-          <button className={`px-2 ${isViewActive('results')} border-l border-spring-200`} onClick={()=>{setView('results')}}>Results</button>
-        </div>
-      </nav>
+  const header = ():JSX.Element => {
+    return(
+      <div>
+        <nav className='p-2 bg-spring-300 flex flex-col text-white rounded-t-xl'>
+          <img src={logo} className='m-2 h-12'/>
+          <div id='Links' className='p-2 text-sm flex flex-row justify-center items-center '>
+            <button className={`px-2 ${isViewActive('splash')}`} onClick={()=>{setView('splash')}}>Splash</button>
+            <button className={`px-2 ${isViewActive('welcome')} border-l border-spring-200`} onClick={()=>{setView('welcome')}}>Home</button>
+            <button className={`px-2 ${isViewActive('instructions')} border-l border-spring-200`} onClick={()=>{setView('instructions')}}>About</button>
+            <button className={`px-2 ${isViewActive('questionnaire')} border-l border-spring-200`} onClick={()=>{setView('questionnaire')}}>Quiz</button>
+            <button className={`px-2 ${isViewActive('results')} border-l border-spring-200`} onClick={()=>{setView('results')}}>Results</button>
+          </div>
+        </nav>
 
-      <div id='Progress'
-        className='mb-4 p-2 bg-spring-200 flex flex-row justify-center items-center' 
-        style={{display: progress>0&&progress<100 ? 'flex' : 'none'}}
-      >
-        <h1>Quiz progress:</h1>
-        <div className="m-2 h-4 w-3/4 max-w-xl rounded-xl shadow bg-gray-200">
-            <div 
-                className="h-full rounded-xl bg-wavy transition-all duration-1000" 
-                style={{width:`${progress}%`}}
-            />
+        <div id='Progress'
+          className='mb-4 p-2 bg-spring-200 flex flex-row justify-center items-center' 
+          style={{display: progress>0&&progress<100 ? 'flex' : 'none'}}
+        >
+          <h1>Quiz progress:</h1>
+          <div className="m-2 h-4 w-3/4 max-w-xl rounded-xl shadow bg-gray-200">
+              <div 
+                  className="h-full rounded-xl bg-wavy transition-all duration-1000" 
+                  style={{width:`${progress}%`}}
+              />
+          </div>
         </div>
       </div>
-
-      <span id='CurrentView' className='rounded-b-xl'>{ content() }</span>
-      
+    )
+  }
+  return (
+    <div id='Menu' className="App h-full">
+      <TV showTV={view==='splash'} children={
+        <div className='h-full w-full'>
+          {view==='splash' ? '' : header()}
+          {content()}
+        </div>
+      } onClick={{onTurnDial: ()=>{setView('welcome')}}}/>
     </div>
   );
 }
