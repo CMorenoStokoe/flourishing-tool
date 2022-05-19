@@ -4,6 +4,7 @@ import './App.css';
 import {question, questionnaire, results} from './model/types';
 // Assets
 import {questions} from './assets/questionnaire';
+import logo from './assets/gfx/logo-flourish.svg';
 // Views
 import {TV, Splash} from './templates/splash';
 import {Welcome} from './templates/welcome';
@@ -174,7 +175,7 @@ const App: React.FC = () => {
     return(
       <div>
         <nav className='p-2 bg-spring-300 flex flex-col text-white rounded-t-xl'>
-          <h1 className='text-2xl text-spring-400'>Flourishing Online</h1>
+          <img src={logo} className='m-2 h-12'/>
           <div id='Links' className='p-2 text-sm flex flex-row justify-center items-center '>
             <button className={`px-2 ${isViewActive('splash')}`} onClick={()=>{setView('splash')}}>Splash</button>
             <button className={`px-2 ${isViewActive('welcome')} border-l border-spring-200`} onClick={()=>{setView('welcome')}}>Home</button>
@@ -199,18 +200,11 @@ const App: React.FC = () => {
       </div>
     )
   }
-  const showHeaderAfterSplash = ():JSX.Element => {
-    if(view==='splash'){
-      return <div></div>
-    } else {
-      return header()
-    }
-  }
   return (
     <div id='Menu' className="App h-full">
-      <TV view={view} content={
+      <TV showTV={view==='splash'} children={
         <div className='h-full w-full'>
-          {showHeaderAfterSplash()}
+          {view==='splash' ? '' : header()}
           {content()}
         </div>
       } onClick={{onTurnDial: ()=>{setView('welcome')}}}/>

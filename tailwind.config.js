@@ -5,12 +5,12 @@ module.exports = {
     extend: {
       colors:{
         'spring': {
-          100: '#FAF1E6',
-          200: '#D6EFC7',
-          300: '#96BB7C',
-          400: '#184D47'
+          100: '#f8f8ff', //FAF1E6 //FAF1E6
+          200: '#FFE69A', //D6EFC7 //ABEDD8
+          300: '#FFD24C', //96BB7C //5AB896
+          400: '#5AB896' //184D47 //2D4059
         },
-        'orange': '#EEBB4D'
+        'orange': '#B85A7C' //EEBB4D
       }
     },
   },
