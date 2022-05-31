@@ -5,6 +5,7 @@ import flowerGIF from '../assets/gfx/petal-flower.gif';
 export function Welcome(props:{
     onClick: {
         start: Function;
+        demo: Function;
     }
 }):JSX.Element {
     return(
@@ -31,6 +32,10 @@ export function Welcome(props:{
                     </p>
 
                     <ThemeButton value='Begin here' variant='default' animateAfter='0ms' onClick={props.onClick.start}/>
+                    <br/>
+                    <button className='text-spring-200 hover:text-spring-100' onClick={()=>{props.onClick.demo()}}>
+                        ...or click here to load the demo!
+                    </button>
                 </div>
             </div>
         </div>

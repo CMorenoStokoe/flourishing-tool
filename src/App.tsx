@@ -132,7 +132,10 @@ const App: React.FC = () => {
         <Splash onClick={{start: ()=>{ setView('welcome') }}}/>
       );
       case 'welcome': return(
-        <Welcome onClick={{start: ()=>{ setView('instructions') }}}/>
+        <Welcome onClick={{
+          start: ()=>{ setView('instructions') },
+          demo: ()=>{loadResponses('W13524243514253415241314241512411111'); setView('questionnaire')}
+        }}/>
       );
       case 'instructions': return(
         <Instructions onClick={{start: ()=>{ setView('questionnaire') }}}/>
@@ -182,6 +185,7 @@ const App: React.FC = () => {
             <button className={`px-2 ${isViewActive('instructions')} border-l border-spring-200`} onClick={()=>{setView('instructions')}}>About</button>
             <button className={`px-2 ${isViewActive('questionnaire')} border-l border-spring-200`} onClick={()=>{setView('questionnaire')}}>Quiz</button>
             <button className={`px-2 ${isViewActive('results')} border-l border-spring-200`} onClick={()=>{setView('results')}}>Results</button>
+            <button className={`px-2 ${isViewActive('results')} border-l border-spring-200`} onClick={()=>{loadResponses('W13524243514253415241314241512411111'); setView('results')}}>Demo</button>
           </div>
         </nav>
 
